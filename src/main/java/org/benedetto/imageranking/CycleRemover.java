@@ -1,3 +1,5 @@
+package org.benedetto.imageranking;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -13,9 +15,9 @@ import java.util.Stack;
 
 public class CycleRemover {
 
-    DirectedWeightedGraph dwg;
+    AdjacencyGraph dwg;
 
-    public CycleRemover(DirectedWeightedGraph dwg) {
+    public CycleRemover(AdjacencyGraph dwg) {
         this.dwg = dwg;
     }
 

@@ -1,21 +1,22 @@
+package org.benedetto.imageranking;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Stack;
 
 
-public class DirectedWeightedGraph {
+public class AdjacencyGraph {
 
     float [][] matrix;
     int nodes;
 
     // TODO: the diagonal elements will always be zero. Hence we could reduce the dimension by one.
-    public DirectedWeightedGraph(int nodes) {
+    public AdjacencyGraph(int nodes) {
         this.nodes = nodes;
         matrix = new float[nodes][nodes];
     }
 
-    public DirectedWeightedGraph(int nodes, float[] entries) {
+    public AdjacencyGraph(int nodes, float[] entries) {
         this.nodes = nodes;
         this.matrix = new float[nodes][nodes];
         if (entries.length != (nodes - 1) * nodes / 2)
@@ -29,7 +30,7 @@ public class DirectedWeightedGraph {
         }
     }
 
-    public DirectedWeightedGraph(int nodes, int edges) {
+    public AdjacencyGraph(int nodes, int edges) {
         this(nodes);
         Random r = new Random();
         for (int i = 0; i < edges; i++) {
