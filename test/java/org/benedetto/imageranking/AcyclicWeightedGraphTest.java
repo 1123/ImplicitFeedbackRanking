@@ -91,4 +91,16 @@ public class AcyclicWeightedGraphTest {
         assertTrue(floatEqual(g.get(3).get(4), 0.2f));
     }
 
+    @Test
+    public void doubleCycleRemovalTest() {
+        AcyclicWeightedGraph g = new AcyclicWeightedGraph();
+        g.addEdge(1,2,0.1f);
+        g.addEdge(2,3,0.2f);
+        g.addEdge(1,4,0.3f);
+        g.addEdge(4,3,0.4f);
+        g.addEdge(3,1,0.3f);
+        assertNull(g.get(3).get(1));
+        gsonPrint(g);
+    }
+
 }

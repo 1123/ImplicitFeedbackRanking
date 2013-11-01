@@ -19,7 +19,7 @@ public class AcyclicWeightedGraph extends HashMapGraph {
     public void addEdge(int from, int to, float weight) {
         super.addEdge(from, to, weight);
         List<Integer> cycle = this.search(to, from);
-        while (cycle != null) {
+        while (cycle != null && this.get(from).containsKey(to) && this.get(from).get(to) > 0f) {
             this.removeCycle(cycle);
             cycle = this.search(to, from);
         }

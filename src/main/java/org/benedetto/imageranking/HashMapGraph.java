@@ -56,16 +56,17 @@ public class HashMapGraph extends HashMap<Integer, HashMap<Integer, Float>> {
     }
 
     private void decreaseCycle(List<Integer> cycle, float decrement) {
-        int firstFrom = cycle.get(cycle.size() - 1);
-        int firstTo = cycle.get(0);
+        Integer firstFrom = cycle.get(cycle.size() - 1);
+        Integer firstTo = cycle.get(0);
         float firstEdgeWeight = this.get(firstFrom).get(firstTo) - decrement;
         if (FloatUtils.floatEqual(firstEdgeWeight, 0f)) {
-            this.get(firstFrom).remove(cycle.get(firstTo));
+            this.get(firstFrom).remove(firstTo);
+        } else {
+            this.get(firstFrom).put(firstTo, firstEdgeWeight);
         }
-        this.get(firstFrom).put(firstTo, firstEdgeWeight);
         for (int i = 0; i < cycle.size() - 1; i++) {
-            int from = cycle.get(i);
-            int to = cycle.get(i+1);
+            Integer from = cycle.get(i);
+            Integer to = cycle.get(i+1);
             float edgeWeight = this.get(from).get(to) - decrement;
             if (FloatUtils.floatEqual(edgeWeight, 0f)) {
                 this.get(from).remove(to);
