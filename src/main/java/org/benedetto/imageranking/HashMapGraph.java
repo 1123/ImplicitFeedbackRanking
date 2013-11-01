@@ -25,9 +25,9 @@ public class HashMapGraph extends HashMap<Integer, HashMap<Integer, Float>> {
     }
 
     public List<Integer> searchRec(int start, int goal, Stack<Integer> path) {
+        if (this.get(start) == null) return null;
         path.push(start);
         // if the start node does not have any outgoing edges, then the current edge cannot be part of a cycle.
-        if (this.get(start) == null) return null;
         for (Integer newStart : this.get(start).keySet()) {
             if (newStart.equals(goal)) {
                 path.push(newStart);
@@ -62,7 +62,7 @@ public class HashMapGraph extends HashMap<Integer, HashMap<Integer, Float>> {
         if (FloatUtils.floatEqual(firstEdgeWeight, 0f)) {
             this.get(firstFrom).remove(cycle.get(firstTo));
         }
-        this.get(cycle.get(cycle.size() - 1)).put(cycle.get(0), firstEdgeWeight);
+        this.get(firstFrom).put(firstTo, firstEdgeWeight);
         for (int i = 0; i < cycle.size() - 1; i++) {
             int from = cycle.get(i);
             int to = cycle.get(i+1);
