@@ -95,6 +95,8 @@ public class AcyclicWeightedGraphTest {
     public void doubleCycleRemovalTest() {
         AcyclicWeightedGraph g = new AcyclicWeightedGraph();
         g.addEdge(1,2,0.1f);
+        g.addEdge(1,2,0.1f);
+        g.addEdge(2,1,0.1f);
         g.addEdge(2,3,0.2f);
         g.addEdge(1,4,0.3f);
         g.addEdge(4,3,0.4f);
