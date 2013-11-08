@@ -17,8 +17,11 @@ public class RandomFeedbackTest {
     public void test() {
         FeedBackGenerator feedBackGenerator = new FeedBackGenerator();
         gsonPrint(feedBackGenerator.attractivity);
+        AcyclicWeightedGraph g = new AcyclicWeightedGraph();
         while (feedBackGenerator.hasNext()) {
-            gsonPrint(feedBackGenerator.next());
+            FeedBack f = feedBackGenerator.next();
+            gsonPrint(f);
+            g.addFeedBack(f);
         }
     }
 }

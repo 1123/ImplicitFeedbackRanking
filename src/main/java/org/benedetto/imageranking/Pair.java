@@ -8,4 +8,10 @@ public class Pair <S,T> {
         this.first = first;
         this.second = second;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Pair<S,T> thatPair = (Pair<S,T>) o;
+        return (this.first.equals(thatPair.first) && this.second.equals(thatPair.second));
+    }
 }

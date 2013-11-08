@@ -33,7 +33,7 @@ public class AcyclicWeightedGraphTest {
         g.addEdge(1, 2, 0.1f);
         g.addEdge(1, 2, 0.2f);
         gsonPrint(g);
-        assertTrue(floatEqual(g.get(1).get(2), 0.3f));
+        assertTrue(floatEqual(g.getF(1).get(2), 0.3f));
     }
 
     @Test
@@ -66,11 +66,11 @@ public class AcyclicWeightedGraphTest {
         AcyclicWeightedGraph g = new AcyclicWeightedGraph();
         g.addEdge(1, 2, 0.1f);
         g.addEdge(2, 1, 0.2f);
-        assertTrue(floatEqual(g.get(2).get(1), 0.1f));
-        assertFalse(g.get(1).containsKey(2));
+        assertTrue(floatEqual(g.getF(2).get(1), 0.1f));
+        assertFalse(g.getF(1).containsKey(2));
     }
 
-    private AcyclicWeightedGraph longCycleGraph() {
+    public static AcyclicWeightedGraph longCycleGraph() {
         AcyclicWeightedGraph g = new AcyclicWeightedGraph();
         g.addEdge(0, 2, 0.3f);
         g.addEdge(1, 2, 0.1f);
@@ -84,11 +84,11 @@ public class AcyclicWeightedGraphTest {
     @Test
     public void longCycleRemovalTest() {
         AcyclicWeightedGraph g = this.longCycleGraph();
-        assertNull(g.get(1).get(2));
-        assertTrue(floatEqual(g.get(2).get(3), 0.1f));
-        assertTrue(floatEqual(g.get(0).get(2), 0.3f));
-        assertTrue(floatEqual(g.get(5).get(1), 0.3f));
-        assertTrue(floatEqual(g.get(3).get(4), 0.2f));
+        assertNull(g.getF(1).get(2));
+        assertTrue(floatEqual(g.getF(2).get(3), 0.1f));
+        assertTrue(floatEqual(g.getF(0).get(2), 0.3f));
+        assertTrue(floatEqual(g.getF(5).get(1), 0.3f));
+        assertTrue(floatEqual(g.getF(3).get(4), 0.2f));
     }
 
     @Test
@@ -99,9 +99,9 @@ public class AcyclicWeightedGraphTest {
         g.addEdge(2,1,0.1f);
         g.addEdge(2,3,0.2f);
         g.addEdge(1,4,0.3f);
-        g.addEdge(4,3,0.4f);
-        g.addEdge(3,1,0.3f);
-        assertNull(g.get(3).get(1));
+        g.addEdge(4, 3, 0.4f);
+        g.addEdge(3, 1, 0.3f);
+        assertNull(g.getF(3).get(1));
         gsonPrint(g);
     }
 
