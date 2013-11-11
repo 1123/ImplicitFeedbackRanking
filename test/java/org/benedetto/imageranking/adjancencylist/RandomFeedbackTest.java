@@ -36,4 +36,12 @@ public class RandomFeedbackTest {
         Collections.sort(page, nc);
         gsonPrint(page);
     }
+
+    @Test
+    public void simpleTest() {
+        AcyclicWeightedGraph acyclicWeightedGraph = new AcyclicWeightedGraph();
+        FeedBack feedBack = new FeedBack(3, Arrays.asList(new Integer[]{ 1,2,3,4,5 }));
+        acyclicWeightedGraph.addFeedBack(feedBack);
+        gsonPrint(acyclicWeightedGraph);
+    }
 }

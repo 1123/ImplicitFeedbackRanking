@@ -10,7 +10,7 @@ import java.net.URISyntaxException;
 
 public class GrizzlyStarter implements Runnable {
 
-    final static String BASE_URI = "http://localhost:8080/rdfstore/";
+    final static String BASE_URI = "http://localhost:8080/image_ranking/";
     ResourceConfig config = new ResourceConfig().packages("org");
     private HttpServer server = null;
 

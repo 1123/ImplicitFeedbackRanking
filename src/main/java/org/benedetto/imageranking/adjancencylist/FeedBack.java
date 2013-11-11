@@ -10,6 +10,11 @@ public class FeedBack {
     int chosen;
     List<Integer> page;
 
+    public FeedBack(int chosen, List<Integer> page) {
+        this.chosen = chosen;
+        this.page = page;
+    }
+
     public FeedBack(int pageSize, int items, Map<Integer, Float> attractivity) {
         if (pageSize > items) throw new RuntimeException("Pagesize must be smaller or equal to the number of items.");
         this.page = new ArrayList<>();

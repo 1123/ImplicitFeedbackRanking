@@ -10,4 +10,5 @@ dependencies {
     compile 'com.google.guava:guava:14.0.1'
     compile 'org.glassfish.jersey.containers:jersey-container-grizzly2-http:2.3'
     compile 'org.apache.httpcomponents:httpclient:4.3'
+    compile 'javax.servlet:servlet-api:2.5'
 }

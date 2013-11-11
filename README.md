@@ -1,5 +1,8 @@
-ImplicitFeedbackRanking: This project allows to mine the attractiveness of images or other items displayed on a web site by examining Web user behavior (clicks)
+Implicit Feedback Ranking: 
 ===========================================
+
+This project allows to mine the attractiveness of images or other items
+displayed on a web site by examining Web user behavior (clicks).
 
 Counting clicks upon images displayed on a search results page (e.g. CD covers,
 pictures, applicants) allows to measure the attractiveness of these images. The
@@ -11,8 +14,9 @@ the number of times it has been displayed and the relative attractiveness of
 other items displayed on the same search results page.
 
 This project allows to accurately measure the attractivness of items by
-maintaining an acyclic weigthed graph where the vertices (nodes) correspond to the items, 
-and the weighted edges correspond to user preferences between the items.
+maintaining an acyclic weigthed graph where the vertices (nodes) correspond to
+the items, and the weighted edges correspond to user preferences between the
+items.
 
 Prerequisites for building
 --------------
