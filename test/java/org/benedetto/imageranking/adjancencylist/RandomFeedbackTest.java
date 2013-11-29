@@ -1,8 +1,5 @@
 package org.benedetto.imageranking.adjancencylist;
 
-import org.benedetto.imageranking.adjancencylist.FeedBack;
-import org.benedetto.imageranking.adjancencylist.FeedBackGenerator;
-import org.benedetto.imageranking.adjancencylist.NodeComparator;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -19,6 +16,12 @@ import static org.benedetto.imageranking.TestUtil.gsonPrint;
  * To change this template use File | Settings | File Templates.
  */
 public class RandomFeedbackTest {
+
+    /**
+     * This test generates clicks and adds them to an acyclic weighted graph.
+     * Subsequently the transitive closure of this graph is generated, and an example page
+     * is sorted using a node comparator based on the transitive closure.
+     */
 
     @Test
     public void test() {
