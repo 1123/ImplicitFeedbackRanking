@@ -1,4 +1,4 @@
-package org.benedetto.imageranking.adjancencylist;
+package org.benedetto.ifr.adjancencylist;
 
 import org.junit.Test;
 
@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.benedetto.imageranking.TestUtil.gsonPrint;
+import static org.benedetto.ifr.TestUtil.gsonPrint;
 
 /**
  * Created with IntelliJ IDEA.

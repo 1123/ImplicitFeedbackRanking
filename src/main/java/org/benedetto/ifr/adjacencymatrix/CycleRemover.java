@@ -1,4 +1,4 @@
-package org.benedetto.imageranking.adjacencymatrix;
+package org.benedetto.ifr.adjacencymatrix;
 
 import java.util.ArrayList;
 import java.util.List;

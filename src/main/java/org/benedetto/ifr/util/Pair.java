@@ -1,4 +1,4 @@
-package org.benedetto.imageranking.util;
+package org.benedetto.ifr.util;
 
 public class Pair <S,T> {
     public S first;

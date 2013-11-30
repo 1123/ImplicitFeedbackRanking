@@ -1,6 +1,6 @@
-package org.benedetto.imageranking.adjancencylist;
+package org.benedetto.ifr.adjancencylist;
 
-import org.benedetto.imageranking.TestUtil;
+import org.benedetto.ifr.TestUtil;
 import org.junit.Test;
 
 import static org.junit.Assert.assertArrayEquals;

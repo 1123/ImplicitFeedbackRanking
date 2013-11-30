@@ -1,6 +1,6 @@
-package org.benedetto.imageranking.adjancencylist;
+package org.benedetto.ifr.adjancencylist;
 
-import org.benedetto.imageranking.util.Pair;
+import org.benedetto.ifr.util.Pair;
 
 import java.util.*;
 

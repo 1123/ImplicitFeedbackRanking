@@ -1,4 +1,4 @@
-package org.benedetto.imageranking.adjancencylist;
+package org.benedetto.ifr.adjancencylist;
 
 import org.junit.Test;
 
@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.Assert.*;
-import static org.benedetto.imageranking.util.FloatUtils.floatEqual;
-import static org.benedetto.imageranking.TestUtil.gsonPrint;
+import static org.benedetto.ifr.util.FloatUtils.floatEqual;
+import static org.benedetto.ifr.TestUtil.gsonPrint;
 
 
 /**

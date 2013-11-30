@@ -1,7 +1,7 @@
-package org.benedetto.imageranking.adjacencymatrix;
+package org.benedetto.ifr.adjacencymatrix;
 
-import org.benedetto.imageranking.TestUtil;
-import org.benedetto.imageranking.util.FloatUtils;
+import org.benedetto.ifr.TestUtil;
+import org.benedetto.ifr.util.FloatUtils;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;

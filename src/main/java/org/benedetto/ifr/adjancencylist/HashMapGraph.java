@@ -1,6 +1,6 @@
-package org.benedetto.imageranking.adjancencylist;
+package org.benedetto.ifr.adjancencylist;
 
-import org.benedetto.imageranking.util.FloatUtils;
+import org.benedetto.ifr.util.FloatUtils;
 
 import java.util.*;
 

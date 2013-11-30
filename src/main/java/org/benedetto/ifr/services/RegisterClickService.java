@@ -1,8 +1,8 @@
-package org.benedetto.imageranking.services;
+package org.benedetto.ifr.services;
 
 import com.google.gson.Gson;
-import org.benedetto.imageranking.adjancencylist.AcyclicWeightedGraph;
-import org.benedetto.imageranking.adjancencylist.FeedBack;
+import org.benedetto.ifr.adjancencylist.AcyclicWeightedGraph;
+import org.benedetto.ifr.adjancencylist.FeedBack;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

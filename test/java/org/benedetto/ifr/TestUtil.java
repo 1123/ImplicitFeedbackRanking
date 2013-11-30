@@ -1,4 +1,4 @@
-package org.benedetto.imageranking;
+package org.benedetto.ifr;
 
 import com.google.gson.Gson;
 
