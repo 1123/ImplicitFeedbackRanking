@@ -23,7 +23,6 @@
                 <artifactId>maven-embedded-glassfish-plugin</artifactId>
                 <version>3.0</version>
                 <configuration>
-                    <goalPrefix>glassfish</goalPrefix>
                     <app>target/frontend.war</app>
                     <port>8080</port>
                     <contextRoot>test</contextRoot>
