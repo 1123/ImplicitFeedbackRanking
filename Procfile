@@ -1,1 +1,1 @@
-web: mvn embedded-glassfish:run
+web: sh target/bin/webapp
