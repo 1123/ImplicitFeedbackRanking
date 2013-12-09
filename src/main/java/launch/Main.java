@@ -1,6 +1,9 @@
 package launch;
 
 import java.io.File;
+
+import org.apache.catalina.Context;
+import org.apache.catalina.Wrapper;
 import org.apache.catalina.startup.Tomcat;
 
 public class Main {
@@ -18,9 +21,18 @@ public class Main {
         }
 
         tomcat.setPort(Integer.valueOf(webPort));
-
         tomcat.addWebapp("/", new File(webappDirLocation).getAbsolutePath());
-        System.out.println("configuring app with basedir: " + new File("./" + webappDirLocation).getAbsolutePath());
+
+        /*
+        Context ctx = tomcat.addContext("/resources/", "src");
+
+        Wrapper defaultServlet = ctx.createWrapper();
+        defaultServlet.setName("default");
+        defaultServlet.setServletClass("org.apache.catalina.servlets.DefaultServlet");
+        defaultServlet.addInitParameter("debug", "0");
+        defaultServlet.addInitParameter("listings", "false");
+        defaultServlet.setLoadOnStartup(1); 
+        */
 
         tomcat.start();
         tomcat.getServer().await();

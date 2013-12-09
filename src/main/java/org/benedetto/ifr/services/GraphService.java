@@ -1,13 +1,15 @@
 package org.benedetto.ifr.services;
 
 import com.google.gson.Gson;
+import org.benedetto.ifr.adjancencylist.AcyclicWeightedGraph;
+import org.benedetto.ifr.adjancencylist.FeedBack;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import java.sql.SQLException;
 
 @Path("graph")
 public class GraphService {
@@ -15,7 +17,29 @@ public class GraphService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getGraph(@Context HttpServletRequest req) {
-        return new Gson().toJson(req.getSession().getAttribute("graph"));
+        AcyclicWeightedGraph awg = (AcyclicWeightedGraph) req.getSession().getAttribute("graph");
+        return new Gson().toJson(awg);
     }
+
+    @GET @Path("list")
+    public String list() {
+        return "list";
+    }
+
+    @Path("click") @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String registerClick(@Context HttpServletRequest req, final String feedBack) throws SQLException {
+        HttpSession session = req.getSession(true);
+        AcyclicWeightedGraph acyclicWeightedGraph = (AcyclicWeightedGraph) session.getAttribute("graph");
+        if (acyclicWeightedGraph == null) {
+            acyclicWeightedGraph = new AcyclicWeightedGraph();
+            session.setAttribute("graph", acyclicWeightedGraph);
+        }
+        FeedBack fb = new Gson().fromJson(feedBack, FeedBack.class);
+        acyclicWeightedGraph.addFeedBack(fb);
+        return "OK";
+    }
+
 
 }
