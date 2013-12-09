@@ -1,0 +1,7 @@
+tomcat.8080/
+classes/
+gfembed*
+.idea/
+target/
+frontend.iml
+
