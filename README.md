@@ -21,10 +21,14 @@ items.
 Prerequisites for building
 --------------
 * Java 1.7 or greater
-* gradle (build tool)
+* Maven
+* heroku for remote deployment
 
 Installation
 -------------
+
+* mvn package
+* chmod +x target/bin/webapp && target/bin/webapp
 
 Milestones:
 -----------
