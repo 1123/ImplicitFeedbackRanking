@@ -8,10 +8,19 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static junit.framework.Assert.assertTrue;
 
 public class FlickrTest {
+
+    @Test
+    public void testMultipleTags() throws IOException {
+        FlickrRestClient flickrRestClient = new FlickrRestClient();
+        List<String> urls = flickrRestClient.getImageUrls(10, "Ferienwohnung Bayern");
+        System.out.println(urls);
+    }
 
     @Test
     public void testFerienwohnung() throws IOException {

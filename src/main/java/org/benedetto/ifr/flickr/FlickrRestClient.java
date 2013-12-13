@@ -24,10 +24,12 @@ public class FlickrRestClient {
         client = new HttpClient();
     }
 
-    public String search(int perPage, String tag) throws IOException {
+    public String search(int perPage, String tags) throws IOException {
+        // tags are separated by spaces. These must be URL encoded.
+        String escapedTags = tags.replaceAll(" ", "%20");
         String url = String.format(
                 "%s?method=flickr.photos.search&per_page=%d&nojsoncallback=1&format=json&tags=%s&%s",
-                restService, perPage, tag, apiKeyParam);
+                restService, perPage, escapedTags, apiKeyParam);
         return this.get(url);
     }
 
@@ -40,15 +42,15 @@ public class FlickrRestClient {
         return new String(responseBody);
     }
 
-    public List<PhotoDetails> getImages(int number, String tag) throws IOException {
-        String json = this.search(number, tag);
+    public List<PhotoDetails> getImages(int number, String tags) throws IOException {
+        String json = this.search(number, tags);
         FlickrSearchResponse response = new Gson().fromJson(json, FlickrSearchResponse.class);
         return response.photos.photo;
     }
 
-    public List<String> getImageUrls(int number, String tag) throws IOException {
-        List<PhotoDetails> photos = this.getImages(number, tag);
-        List<String> result = new ArrayList<String>();
+    public List<String> getImageUrls(int number, String tags) throws IOException {
+        List<PhotoDetails> photos = this.getImages(number, tags);
+        List<String> result = new ArrayList<>();
         for (PhotoDetails photoDetails : photos) {
             result.add(photoDetails.getUrl());
         }
