@@ -3,7 +3,9 @@ package org.benedetto.ifr.services;
 import com.google.gson.Gson;
 import org.benedetto.ifr.adjancencylist.AcyclicWeightedGraph;
 import org.benedetto.ifr.adjancencylist.FeedBack;
+import org.benedetto.ifr.flickr.FlickrCache;
 import org.benedetto.ifr.flickr.FlickrRestClient;
+import org.benedetto.ifr.flickr.InvalidCacheRequestException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,9 +30,9 @@ public class GraphService {
     @Produces(MediaType.APPLICATION_JSON)
     public String searchFlickr(
             @QueryParam("number") int number,
-            @QueryParam("tag") String tag) throws IOException {
-        FlickrRestClient flickrRestClient = new FlickrRestClient();
-        List<String> urls = flickrRestClient.getImageUrls(number, tag);
+            @QueryParam("tag") String tag) throws IOException, InvalidCacheRequestException {
+        FlickrCache cache = new FlickrCache();
+        List<String> urls = cache.getImageUrls(number, tag);
         return new Gson().toJson(urls);
     }
 

@@ -1,10 +1,27 @@
-<html>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     <head>
         <script src="jquery.min.js"></script>
         <script src="pure.js"></script>
         <script src="main.js"></script>
     </head>
     <body>
+        <h3>Implicit Feedback Ranking by Acyclic Graph Maintenance</h3>
+        <div>This page shows how the attractiveness of images can be learned from
+            implicit feedback from users to a website.
+            <ol>
+                <li>Enter a search term below to search for tagged images on FlickR.</li>
+                <li>A random sample of the retrieved images is displayed.</li>
+                <li>Select an image that you like by clicking on it.</li>
+                <li>Navigate back to this page, which will display a different set of
+                    pictures for the search term.</li>
+                <li>Again, select an image that you like.</li>
+                <li>Repeat the above steps a couple of times.</li>
+            </ol>
+        </div>
+        <form id="search_form">
+            <input type="text" id="tags_input"/>
+            <button id="search_button">Search</button>
+        </form>
         <table style="display:none"><tr>
             <td class="template">
                 <a class='image_link'><img class='image'/></a>
@@ -15,6 +32,25 @@
         <div>
             <ul id="image_list">
             </ul>
+        </div>
+        <h3>Related Work:</h3>
+        <div>
+            <ol>
+                <li>
+                    <div><b>BPR: Bayesian Personalized Ranking from Implicit Feedback</b></div>
+                    <div>This work describes an approach to personalized ranking.
+                        This creates a user specific ranking for a set of items. We do not do
+                        personalized ranking, since we are interested in the objective
+                        attractiveness of images. Knowing the overall attractiveness is important
+                        for
+                        <ul>
+                            <li>Showing the page to possible investors.</li>
+                            <li>Improving the first impression of your site for first time customers.</li>
+                            <li>Giving your content providers information on how their images compare to others.</li>
+                        </ul>
+                    </div>
+                </li>
+            </ol>
         </div>
     </body>
 </html>

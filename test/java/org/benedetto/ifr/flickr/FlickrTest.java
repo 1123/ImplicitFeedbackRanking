@@ -16,24 +16,10 @@ import static junit.framework.Assert.assertTrue;
 public class FlickrTest {
 
     @Test
-    public void testMultipleTags() throws IOException {
-        FlickrRestClient flickrRestClient = new FlickrRestClient();
-        List<String> urls = flickrRestClient.getImageUrls(10, "Ferienwohnung Bayern");
-        System.out.println(urls);
-    }
-
-    @Test
     public void testFerienwohnung() throws IOException {
         FlickrRestClient flickrRestClient = new FlickrRestClient();
         List<PhotoDetails> details = flickrRestClient.getImages(10, "Ferienwohnung");
         System.out.println(details.size());
-    }
-
-    @Test
-    public void testGetUrls() throws IOException {
-        FlickrRestClient flickrRestClient = new FlickrRestClient();
-        List<String> urls = flickrRestClient.getImageUrls(10, "Ferienhaus");
-        System.out.println(urls);
     }
 
     @Test

@@ -48,12 +48,4 @@ public class FlickrRestClient {
         return response.photos.photo;
     }
 
-    public List<String> getImageUrls(int number, String tags) throws IOException {
-        List<PhotoDetails> photos = this.getImages(number, tags);
-        List<String> result = new ArrayList<>();
-        for (PhotoDetails photoDetails : photos) {
-            result.add(photoDetails.getUrl());
-        }
-        return result;
-    }
 }

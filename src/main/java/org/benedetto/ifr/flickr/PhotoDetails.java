@@ -16,5 +16,6 @@ public class PhotoDetails {
                 "http://farm%s.staticflickr.com/%s/%s_%s_m.jpg",
                 farm, server, id, secret);
     }
+
 }
 
