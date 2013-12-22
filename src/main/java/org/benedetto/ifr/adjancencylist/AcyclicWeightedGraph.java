@@ -4,32 +4,32 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class AcyclicWeightedGraph extends HashMapGraph {
+public class AcyclicWeightedGraph<N> extends HashMapGraph<N> {
 
     public AcyclicWeightedGraph() {
         super();
     }
 
-    public void addEdge(int from, int to, float weight) {
+    public void addEdge(N from, N to, float weight) {
         super.addEdge(from, to, weight);
-        List<Integer> cycle = this.search(to, from);
+        List<N> cycle = this.search(to, from);
         while (cycle != null && this.getF(from).containsKey(to) && this.getF(from).get(to) > 0f) {
             this.removeCycle(cycle);
             cycle = this.search(to, from);
         }
     }
 
-    public void addFeedBack(FeedBack feedBack) {
+    public void addFeedBack(FeedBack<N> feedBack) {
         float weight = 1.0f / feedBack.page.size();
-        for (int item : feedBack.page) {
+        for (N item : feedBack.page) {
             if (item == feedBack.chosen) continue;
             this.addEdge(item, feedBack.chosen, weight);
         }
     }
 
-    public HashMap<Integer, Float> ranking() {
-        HashMap<Integer, Float> result = new HashMap<>();
-        for (Integer start : this.keySet()) {
+    public HashMap<N, Float> ranking() {
+        HashMap<N, Float> result = new HashMap<>();
+        for (N start : this.keySet()) {
             if (result.containsKey(start)) continue;
             result.put(start, 0f);
             this.rankingRec(start, 0f, result);
@@ -41,8 +41,8 @@ public class AcyclicWeightedGraph extends HashMapGraph {
     //    2       \        \
     // 0 /         \------- 3
 
-    public void rankingRec(int start, float rank, HashMap<Integer, Float> result) {
-        for (Integer next : this.getF(start).keySet()) {
+    public void rankingRec(N start, float rank, HashMap<N, Float> result) {
+        for (N next : this.getF(start).keySet()) {
             if (result.containsKey(next)) continue;
             float newRank = rank + this.getF(start).get(next);
             result.put(next, newRank);

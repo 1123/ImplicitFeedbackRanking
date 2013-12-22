@@ -9,7 +9,7 @@ import java.util.*;
  * Time: 14:18
  * To change this template use File | Settings | File Templates.
  */
-public class FeedBackGenerator implements Iterator<FeedBack> {
+public class FeedBackGenerator implements Iterator<FeedBack<Integer>> {
 
 
     int items;
@@ -44,7 +44,7 @@ public class FeedBackGenerator implements Iterator<FeedBack> {
     public FeedBack next() {
         if (current >= clicks) { throw new RuntimeException("No more Feedback to generate."); }
         this.current++;
-        return new FeedBack(pageSize, items, attractivity);
+        return FeedBack.randomIntFeedback(pageSize, items, attractivity);
     }
 
     @Override

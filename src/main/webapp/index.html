@@ -11,20 +11,23 @@
             <ol>
                 <li>Enter a search term below to search for tagged images on FlickR.</li>
                 <li>A random sample of the retrieved images is displayed.</li>
-                <li>Select an image that you like by clicking on it.</li>
+                <li>Select an image that you like by clicking on it. A json call will be issued
+                    to the server, including the list of ids of displayed images plus the selected image.
+                    This is the implicit feedback shopping sites or social networks generate by users navigating the site.
+                </li>
                 <li>Navigate back to this page, which will display a different set of
                     pictures for the search term.</li>
                 <li>Again, select an image that you like.</li>
                 <li>Repeat the above steps a couple of times.</li>
             </ol>
         </div>
-        <form id="search_form">
+        <div>
             <input type="text" id="tags_input"/>
             <button id="search_button">Search</button>
-        </form>
+        </div>
         <table style="display:none"><tr>
             <td class="template">
-                <a class='image_link'><img class='image'/></a>
+                <img class='image'/>
             </td>
         </tr></table>
         <div id="image_table">

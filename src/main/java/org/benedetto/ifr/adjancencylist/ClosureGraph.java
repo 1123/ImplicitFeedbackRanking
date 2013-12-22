@@ -12,43 +12,43 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 
-public class ClosureGraph extends ArrayList<Pair<Integer, Integer>> {
+public class ClosureGraph<N> extends ArrayList<Pair<N, N>> {
 
-    AcyclicWeightedGraph g;
+    AcyclicWeightedGraph<N> g;
 
     public ClosureGraph(AcyclicWeightedGraph g) {
         this.g = g;
         this.addAll(initial());
-        List<Pair<Integer, Integer>> newPairs = this.iterate(initial());
+        List<Pair<N, N>> newPairs = this.iterate(initial());
         while (newPairs.size() > 0) {
             this.addAll(newPairs);
             newPairs = this.iterate(newPairs);
         }
     }
 
-    private List<Pair<Integer, Integer>> initial() {
-        List<Pair<Integer,Integer>> result = new ArrayList<Pair<Integer,Integer>>();
-        for (Integer from : g.keySet()) {
-            for (Integer to : g.getF(from).keySet()) {
+    private List<Pair<N, N>> initial() {
+        List<Pair<N,N>> result = new ArrayList<Pair<N,N>>();
+        for (N from : g.keySet()) {
+            for (N to : g.getF(from).keySet()) {
                 result.add(new Pair<>(from,to));
             }
         }
         return result;
     }
 
-    public List<Pair<Integer, Integer>> iterate(List<Pair<Integer, Integer>> lastDerived) {
-        List<Pair<Integer, Integer>> newlyDerived = new ArrayList<>();
+    public List<Pair<N, N>> iterate(List<Pair<N, N>> lastDerived) {
+        List<Pair<N, N>> newlyDerived = new ArrayList<>();
         // for (x,y) in lastDerived
-        for (Pair<Integer, Integer> newPair : lastDerived) {
+        for (Pair<N, N> newPair : lastDerived) {
             // for (v,w) in closure
-            for (Pair<Integer, Integer> oldPair : this) {
+            for (Pair<N, N> oldPair : this) {
                 if (newPair.first.equals(oldPair.second)) {
-                    Pair<Integer, Integer> candidate = new Pair<>(oldPair.first, newPair.second);
+                    Pair<N, N> candidate = new Pair<>(oldPair.first, newPair.second);
                     if (this.contains(candidate) || newlyDerived.contains(candidate)) continue;
                     newlyDerived.add(candidate);
                 }
                 if (newPair.second.equals(oldPair.first)) {
-                    Pair<Integer, Integer> candidate = new Pair<>(newPair.first, oldPair.second);
+                    Pair<N, N> candidate = new Pair<>(newPair.first, oldPair.second);
                     if (this.contains(candidate) || newlyDerived.contains(candidate)) continue;
                     newlyDerived.add(candidate);
                 }

@@ -1,19 +1,28 @@
-function click(userName, password) {
-    var feedBack = { chosen : 3, page : [1,2,3,4,5] };
+function submit_click(chosen) {
+    alert("in function click");
+    var feedBack = {
+        chosen : chosen,
+        page : gather_image_urls()
+    };
     $.ajax({
         type: "POST",
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        url: '/webresources/graph/click',
-        dataType: 'json',
-        async: false,
+        url: '/api/graph/click',
+        dataType: 'text',
+        async: true,
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError)
+            alert("error");
+        },
         data: JSON.stringify(feedBack),
         success: function () {
-            console.log("Thanks!");
+            alert: ("success");
         }
     });
+    alert("transferred");
 }
 
 /*
@@ -21,13 +30,17 @@ function click(userName, password) {
  * Pure.js is used as a template rendering engine.
  */
 function fill_image_table(urls) {
+    $('#image_table').empty();
     $('#image_table').append('<table><tr>');
     var directive = {
-        '.image_link@href':'url',
-        '.image@src':'url'
+        '.image@src':'url',
+        '.image@onclick' : 'onclick'
     };
     for (key in urls) {
-        var renderData = { url : urls[key] };
+        var renderData = {
+            url : urls[key],
+            onclick : "submit_click(this.src)"
+        };
         var rendered = $('td.template').first().clone().render(renderData, directive);
         if (key % 3 == 0) $('#image_table').append('</tr><tr>');
         $('#image_table').append(rendered);
@@ -44,5 +57,15 @@ function search(number, tag) {
 }
 
 $(document).ready(function() {
-    search(18, 'Katze');
+    $('#search_button').click(function() {
+        tags = $('#tags_input').val();
+        console.log(tags);
+        search(18, tags);
+    });
 });
+
+
+function gather_image_urls() {
+    var list = $(".image").map(function(){return $(this).attr("src");}).get();
+    return list;
+}

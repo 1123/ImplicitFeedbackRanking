@@ -4,31 +4,31 @@ import org.benedetto.ifr.util.FloatUtils;
 
 import java.util.*;
 
-public class HashMapGraph {
+public class HashMapGraph<N> {
 
-    private HashMap<Integer, HashMap<Integer, Float>> forward;
-    private HashMap<Integer, HashMap<Integer, Float>> backward;
+    private HashMap<N, HashMap<N, Float>> forward;
+    private HashMap<N, HashMap<N, Float>> backward;
 
     public HashMapGraph() {
         this.forward = new HashMap<>();
         this.backward = new HashMap<>();
     }
 
-    public Set<Integer> keySet() {
+    public Set<N> keySet() {
         return this.forward.keySet();
     }
 
     /* get forward edge */
-    public HashMap<Integer, Float> getF(Integer key) {
+    public HashMap<N, Float> getF(N key) {
         return this.forward.get(key);
     }
 
     /* get backward edge */
-    public HashMap<Integer, Float> getB(Integer key) {
+    public HashMap<N, Float> getB(N key) {
         return this.backward.get(key);
     }
 
-    private void addForwardEdge(Integer from, Integer to, Float weight) {
+    private void addForwardEdge(N from, N to, Float weight) {
         if (forward.containsKey(from)) {
             if (forward.get(from).containsKey(to)) {
                 float original = forward.get(from).get(to);
@@ -37,13 +37,13 @@ public class HashMapGraph {
                 forward.get(from).put(to, weight);
             }
         } else {
-            HashMap outgoing = new HashMap<Integer, Float>();
+            HashMap outgoing = new HashMap<N, Float>();
             outgoing.put(to, weight);
             forward.put(from, outgoing);
         }
     }
 
-    private void addBackwardEdge(Integer from, Integer to, Float weight) {
+    private void addBackwardEdge(N from, N to, Float weight) {
         if (backward.containsKey(to)) {
             if (backward.get(to).containsKey(from)) {
                 float original = backward.get(to).get(from);
@@ -52,45 +52,45 @@ public class HashMapGraph {
                 backward.get(to).put(from, weight);
             }
         } else {
-            HashMap incoming = new HashMap<Integer, Float>();
+            HashMap incoming = new HashMap<N, Float>();
             incoming.put(from, weight);
             backward.put(to, incoming);
         }
     }
 
-    public void addEdge(Integer from, Integer to, float weight) {
+    public void addEdge(N from, N to, float weight) {
         if (weight < 0f) throw new RuntimeException("Negative weights are not supported.");
         this.addForwardEdge(from, to, weight);
         this.addBackwardEdge(from, to, weight);
     }
 
-    public List<Integer> search(int start, int goal) {
-        return this.searchRec(start, goal, new Stack<Integer>());
+    public List<N> search(N start, N goal) {
+        return this.searchRec(start, goal, new Stack<N>());
     }
 
-    public List<Integer> searchRec(int start, int goal, Stack<Integer> path) {
+    public List<N> searchRec(N start, N goal, Stack<N> path) {
         if (forward.get(start) == null) return null;
         path.push(start);
         // if the start node does not have any outgoing edges, then the current edge cannot be part of a cycle.
-        for (Integer newStart : forward.get(start).keySet()) {
+        for (N newStart : forward.get(start).keySet()) {
             if (newStart.equals(goal)) {
                 path.push(newStart);
                 return path;
             }
-            List<Integer> found = this.searchRec(newStart, goal, path);
+            List<N> found = this.searchRec(newStart, goal, path);
             if (found != null) return found;
         }
         path.pop();
         return null;
     }
 
-    public void removeCycle(List<Integer> cycle) {
-        int minFrom = cycle.get(cycle.size() - 1);
-        int minTo = cycle.get(0);
+    public void removeCycle(List<N> cycle) {
+        N minFrom = cycle.get(cycle.size() - 1);
+        N minTo = cycle.get(0);
         float minWeight = forward.get(minFrom).get(minTo);
         for (int i = 0; i < cycle.size() - 1; i++) {
-            int from = cycle.get(i);
-            int to = cycle.get(i+1);
+            N from = cycle.get(i);
+            N to = cycle.get(i+1);
             float weight = forward.get(from).get(to);
             if (weight < minWeight) {
                 minWeight = weight;
@@ -99,9 +99,9 @@ public class HashMapGraph {
         decreaseCycle(cycle, minWeight);
     }
 
-    private void decreaseCycle(List<Integer> cycle, float decrement) {
-        Integer firstFrom = cycle.get(cycle.size() - 1);
-        Integer firstTo = cycle.get(0);
+    private void decreaseCycle(List<N> cycle, float decrement) {
+        N firstFrom = cycle.get(cycle.size() - 1);
+        N firstTo = cycle.get(0);
         float firstEdgeWeight = forward.get(firstFrom).get(firstTo) - decrement;
         if (FloatUtils.floatEqual(firstEdgeWeight, 0f)) {
             forward.get(firstFrom).remove(firstTo);
@@ -111,8 +111,8 @@ public class HashMapGraph {
             backward.get(firstTo).put(firstFrom, firstEdgeWeight);
         }
         for (int i = 0; i < cycle.size() - 1; i++) {
-            Integer from = cycle.get(i);
-            Integer to = cycle.get(i+1);
+            N from = cycle.get(i);
+            N to = cycle.get(i+1);
             float edgeWeight = forward.get(from).get(to) - decrement;
             if (FloatUtils.floatEqual(edgeWeight, 0f)) {
                 forward.get(from).remove(to);

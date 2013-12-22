@@ -29,7 +29,7 @@ public class AcyclicWeightedGraphTest {
 
     @Test
     public void doubleEdgeTest() {
-        AcyclicWeightedGraph g = new AcyclicWeightedGraph();
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph();
         g.addEdge(1, 2, 0.1f);
         g.addEdge(1, 2, 0.2f);
         gsonPrint(g);
@@ -63,7 +63,7 @@ public class AcyclicWeightedGraphTest {
 
     @Test
     public void simpleCylceRemovalTest() {
-        AcyclicWeightedGraph g = new AcyclicWeightedGraph();
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph();
         g.addEdge(1, 2, 0.1f);
         g.addEdge(2, 1, 0.2f);
         assertTrue(floatEqual(g.getF(2).get(1), 0.1f));
@@ -83,7 +83,7 @@ public class AcyclicWeightedGraphTest {
 
     @Test
     public void longCycleRemovalTest() {
-        AcyclicWeightedGraph g = this.longCycleGraph();
+        AcyclicWeightedGraph<Integer> g = this.longCycleGraph();
         assertNull(g.getF(1).get(2));
         assertTrue(floatEqual(g.getF(2).get(3), 0.1f));
         assertTrue(floatEqual(g.getF(0).get(2), 0.3f));
