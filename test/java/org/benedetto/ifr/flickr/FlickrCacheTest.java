@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 public class FlickrCacheTest {
@@ -22,14 +23,14 @@ public class FlickrCacheTest {
     @Test
     public void testMultipleTags() throws IOException, InvalidCacheRequestException {
         FlickrCache cache = new FlickrCache();
-        List<String> urls = cache.getImageUrls(10, "Ferienwohnung Bayern");
+        Collection<String> urls = cache.getImageUrls(10, "Ferienwohnung Bayern", ImageSize.m);
         System.out.println(urls);
     }
 
     @Test
     public void testGetUrls() throws IOException, InvalidCacheRequestException {
         FlickrCache cache = new FlickrCache();
-        List<String> urls = cache.getImageUrls(10, "Ferienhaus");
+        Collection<String> urls = cache.getImageUrls(10, "Ferienhaus", ImageSize.m);
         System.out.println(urls);
     }
 

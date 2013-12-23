@@ -4,8 +4,9 @@ import com.google.gson.Gson;
 import org.benedetto.ifr.adjancencylist.AcyclicWeightedGraph;
 import org.benedetto.ifr.adjancencylist.FeedBack;
 import org.benedetto.ifr.flickr.FlickrCache;
-import org.benedetto.ifr.flickr.FlickrRestClient;
+import org.benedetto.ifr.flickr.ImageSize;
 import org.benedetto.ifr.flickr.InvalidCacheRequestException;
+import org.benedetto.ifr.util.Pair;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Collection;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 @Path("graph")
 public class GraphService {
@@ -31,19 +34,23 @@ public class GraphService {
     public String searchFlickr(
             @QueryParam("number") int number,
             @QueryParam("tag") String tag) throws IOException, InvalidCacheRequestException {
+        checkArgument(number > 0);
+        checkArgument(! tag.equals(""));
         FlickrCache cache = new FlickrCache();
-        List<String> urls = cache.getImageUrls(number, tag);
-        return new Gson().toJson(urls);
+        Collection<Pair<String, String>> urlPairs =
+                cache.getImageUrlPairs(number, tag, ImageSize.s, ImageSize.b);
+        return new Gson().toJson(urlPairs);
     }
 
     @Path("click") @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String registerClick(@Context HttpServletRequest req, final String feedBack) throws SQLException {
+        checkArgument(! feedBack.equals(""));
         HttpSession session = req.getSession(true);
-        AcyclicWeightedGraph acyclicWeightedGraph = (AcyclicWeightedGraph) session.getAttribute("graph");
+        AcyclicWeightedGraph<String> acyclicWeightedGraph = (AcyclicWeightedGraph<String>) session.getAttribute("graph");
         if (acyclicWeightedGraph == null) {
-            acyclicWeightedGraph = new AcyclicWeightedGraph();
+            acyclicWeightedGraph = new AcyclicWeightedGraph<>();
             session.setAttribute("graph", acyclicWeightedGraph);
         }
         FeedBack fb = new Gson().fromJson(feedBack, FeedBack.class);

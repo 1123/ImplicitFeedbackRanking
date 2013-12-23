@@ -22,7 +22,7 @@ public class AcyclicWeightedGraph<N> extends HashMapGraph<N> {
     public void addFeedBack(FeedBack<N> feedBack) {
         float weight = 1.0f / feedBack.page.size();
         for (N item : feedBack.page) {
-            if (item == feedBack.chosen) continue;
+            if (item.equals(feedBack.chosen)) continue;
             this.addEdge(item, feedBack.chosen, weight);
         }
     }

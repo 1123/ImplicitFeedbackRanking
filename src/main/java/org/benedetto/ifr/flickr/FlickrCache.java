@@ -1,10 +1,11 @@
 package org.benedetto.ifr.flickr;
 
+import com.google.common.collect.Collections2;
+import org.benedetto.ifr.util.MyFunctional;
+import org.benedetto.ifr.util.Pair;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 // This class caches the search results from flickr.
 // We may use the httpclient for this, yet this would cache at a lower level (which is also fine)
@@ -45,14 +46,23 @@ public class FlickrCache {
         return results;
     }
 
-    public List<String> getImageUrls(int number, String tags) throws IOException, InvalidCacheRequestException {
+    public Collection<String> getImageUrls(int number, String tags, ImageSize size)
+            throws IOException, InvalidCacheRequestException {
         List<PhotoDetails> photos = this.search(tags, number);
-        List<String> result = new ArrayList<>();
-        for (PhotoDetails photoDetails : photos) {
-            result.add(photoDetails.getUrl());
-        }
+        return Collections2.transform(photos, new PhotoDetails.PhotoDetails2Url(size));
+    }
+
+    public Collection<Pair<String, String>> getImageUrlPairs(
+            int number, String tags, ImageSize size1, ImageSize size2)
+            throws InvalidCacheRequestException, IOException {
+        List<PhotoDetails> photos = this.search(tags, number);
+        Collection<String> size1Urls =
+                Collections2.transform(photos, new PhotoDetails.PhotoDetails2Url(size1));
+        Collection<String> size2Urls =
+                Collections2.transform(photos, new PhotoDetails.PhotoDetails2Url(size2));
+        List<Pair<String, String>> result = MyFunctional.zip(size1Urls, size2Urls);
         return result;
     }
 
-
 }
+

@@ -17,7 +17,7 @@ public class ClosureGraphTest {
 
     @Test
     public void simpleTest() {
-        AcyclicWeightedGraph g = new AcyclicWeightedGraph();
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph();
         g.addEdge(1,2,0.2f);
         g.addEdge(2,3,0.3f);
         g.addEdge(2,4,0.3f);
@@ -28,11 +28,11 @@ public class ClosureGraphTest {
 
     @Test
     public void mediumTest() {
-        AcyclicWeightedGraph g = new AcyclicWeightedGraph();
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph();
         g.addEdge(1,4, 0.1f);
         g.addEdge(2,3, 0.2f);
-        g.addEdge(3,4, 0.1f); // 2->4
-        g.addEdge(1,3, 0.1f); // 1->4
+        g.addEdge(3,4, 0.1f);
+        g.addEdge(1,3, 0.1f);
         ClosureGraph cg = new ClosureGraph(g);
         TestUtil.gsonPrint(g);
         TestUtil.gsonPrint(cg);
@@ -40,8 +40,22 @@ public class ClosureGraphTest {
     }
 
     @Test
+    public void urlGraphTest() {
+        AcyclicWeightedGraph<String> g = new AcyclicWeightedGraph();
+        g.addEdge("http://a", "http://d", 0.1f);
+        g.addEdge("http://b", "http://c", 0.2f);
+        g.addEdge("http://c", "http://d", 0.1f);
+        g.addEdge("http://a", "http://c", 0.1f);
+        ClosureGraph cg = new ClosureGraph(g);
+        TestUtil.gsonPrint(g);
+        TestUtil.gsonPrint(cg);
+        assertTrue(cg.size() == 5);
+    }
+
+
+    @Test
     public void test() {
-        AcyclicWeightedGraph g = AcyclicWeightedGraphTest.longCycleGraph();
+        AcyclicWeightedGraph<Integer> g = AcyclicWeightedGraphTest.longCycleGraph();
         ClosureGraph cg = new ClosureGraph(g);
         //TestUtil.gsonPrint(g);
         TestUtil.gsonPrint(cg);
