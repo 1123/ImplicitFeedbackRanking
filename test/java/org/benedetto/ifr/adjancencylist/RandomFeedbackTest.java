@@ -24,7 +24,7 @@ public class RandomFeedbackTest {
      */
 
     @Test
-    public void test() {
+    public void testTopologicalSort() {
         FeedBackGenerator feedBackGenerator = new FeedBackGenerator(5, 20, 10);
         gsonPrint(feedBackGenerator.attractivity);
         AcyclicWeightedGraph g = new AcyclicWeightedGraph();

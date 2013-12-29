@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.benedetto.ifr.util.HttpClientWrapper;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -24,8 +25,7 @@ public class FlickrTest {
 
     @Test
     public void testSearch() throws IOException {
-        FlickrRestClient flickrRestClient = new FlickrRestClient();
-        String json = flickrRestClient.get(FlickrRestClient.searchUrl);
+        String json = FlickrRestClient.search(20, "Ferienwohnung");
         System.out.println(json);
         FlickrSearchResponse response = new Gson().fromJson(json, FlickrSearchResponse.class);
         System.err.println(new Gson().toJson(response));

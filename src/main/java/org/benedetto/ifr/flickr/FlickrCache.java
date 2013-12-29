@@ -12,7 +12,7 @@ import java.util.*;
 
 public class FlickrCache {
 
-    static final int querySize = 100;
+    public static final int querySize = 40;
 
     HashMap<String, List<PhotoDetails>> cache;
 
@@ -31,7 +31,7 @@ public class FlickrCache {
         while (result.size() < number) {
             int position = r.nextInt(searchResults.size());
             if (result.contains(this.search(tags).get(position))) continue;
-            result.add(this.search(tags).get(position));
+            result.add(searchResults.get(position));
         }
         return result;
     }
@@ -46,10 +46,10 @@ public class FlickrCache {
         return results;
     }
 
-    public Collection<String> getImageUrls(int number, String tags, ImageSize size)
+    public Collection<String> getImageUrls(int number, String tags)
             throws IOException, InvalidCacheRequestException {
         List<PhotoDetails> photos = this.search(tags, number);
-        return Collections2.transform(photos, new PhotoDetails.PhotoDetails2Url(size));
+        return Collections2.transform(photos, new PhotoDetails.PhotoDetails2Url());
     }
 
     public Collection<Pair<String, String>> getImageUrlPairs(
@@ -57,9 +57,9 @@ public class FlickrCache {
             throws InvalidCacheRequestException, IOException {
         List<PhotoDetails> photos = this.search(tags, number);
         Collection<String> size1Urls =
-                Collections2.transform(photos, new PhotoDetails.PhotoDetails2Url(size1));
+                Collections2.transform(photos, new PhotoDetails.PhotoDetails2Url());
         Collection<String> size2Urls =
-                Collections2.transform(photos, new PhotoDetails.PhotoDetails2Url(size2));
+                Collections2.transform(photos, new PhotoDetails.PhotoDetails2Url());
         List<Pair<String, String>> result = MyFunctional.zip(size1Urls, size2Urls);
         return result;
     }

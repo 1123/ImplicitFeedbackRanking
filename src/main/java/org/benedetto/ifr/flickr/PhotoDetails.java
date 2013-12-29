@@ -15,23 +15,17 @@ public class PhotoDetails {
     int isfriend;
     int isfamily;
 
-    public String getUrl(ImageSize size) {
+    public String getUrl() {
         return String.format(
-                "http://farm%s.staticflickr.com/%s/%s_%s_%s.jpg",
-                farm, server, id, secret, size.name());
+                "http://farm%s.staticflickr.com/%s/%s_%s",
+                farm, server, id, secret);
     }
 
     public static class PhotoDetails2Url implements Function<PhotoDetails, String> {
 
-        ImageSize size;
-
-        public PhotoDetails2Url(ImageSize size) {
-            this.size = size;
-        }
-
         @Override
         public String apply(@Nullable PhotoDetails photoDetails) {
-            return photoDetails.getUrl(this.size);
+            return photoDetails.getUrl();
         }
 
     }

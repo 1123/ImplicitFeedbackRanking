@@ -1,6 +1,6 @@
 package org.benedetto.ifr.util;
 
-public class Pair <S,T> {
+public class Pair <S, T> {
     public S first;
     public T second;
 
@@ -14,4 +14,6 @@ public class Pair <S,T> {
         Pair<S,T> thatPair = (Pair<S,T>) o;
         return (this.first.equals(thatPair.first) && this.second.equals(thatPair.second));
     }
+
 }
+

@@ -20,6 +20,9 @@ public class AcyclicWeightedGraph<N> extends HashMapGraph<N> {
     }
 
     public void addFeedBack(FeedBack<N> feedBack) {
+        // Possibly the weight should be 1.0f / page.size() - 1.
+        // The weight of the edges is in fact not important, as long as each click
+        // sums up to the same weight.
         float weight = 1.0f / feedBack.page.size();
         for (N item : feedBack.page) {
             if (item.equals(feedBack.chosen)) continue;
@@ -27,9 +30,15 @@ public class AcyclicWeightedGraph<N> extends HashMapGraph<N> {
         }
     }
 
+    /**
+     * This method returns a topological sort of the graph. This implementation seems to be false.
+     * The recursion should only start at root nodes.
+     * @return
+     */
+
     public HashMap<N, Float> ranking() {
         HashMap<N, Float> result = new HashMap<>();
-        for (N start : this.keySet()) {
+        for (N start : this.nodes()) {
             if (result.containsKey(start)) continue;
             result.put(start, 0f);
             this.rankingRec(start, 0f, result);

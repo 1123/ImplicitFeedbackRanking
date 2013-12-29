@@ -4,9 +4,22 @@ import org.benedetto.ifr.util.FloatUtils;
 
 import java.util.*;
 
+/**
+ * This class maintains an acyclic weighted directed graph upon insertions of edges.
+ * Upon insertion of edges, it is checked whether the introduction of the edge would
+ * complete a cycle. In this case the cycle is decreased by the minimum edge weight
+ * of the edges composing the cycle. This way the edge with the minimal weight is
+ * removed. Note that the insertion of an edge may cause multiple cycles to be completed.
+ * In this case the first cycle found in removed. A smarter choice could be to
+ * split the newly inserted edge into multiple virtual edges, one for each newly introduced
+ * cycle.
+ *
+ * @param <N>: The datatype of the Nodes. Might be Integers, Strings, Urls, etc.
+ */
+
 public class HashMapGraph<N> {
 
-    private HashMap<N, HashMap<N, Float>> forward;
+    public HashMap<N, HashMap<N, Float>> forward;
     private HashMap<N, HashMap<N, Float>> backward;
 
     public HashMapGraph() {
@@ -14,8 +27,13 @@ public class HashMapGraph<N> {
         this.backward = new HashMap<>();
     }
 
-    public Set<N> keySet() {
-        return this.forward.keySet();
+    public Set<N> nodes() {
+        // Using a set as result to eliminate duplicate nodes that are contained both in
+        // forward and backward as keys.
+        Set<N> result = new TreeSet<>();
+        result.addAll(this.forward.keySet());
+        result.addAll(this.backward.keySet());
+        return result;
     }
 
     /* get forward edge */

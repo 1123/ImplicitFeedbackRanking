@@ -1,5 +1,6 @@
 package org.benedetto.ifr.adjancencylist;
 
+import org.benedetto.ifr.util.ComparablePair;
 import org.benedetto.ifr.util.Pair;
 
 import java.util.*;
@@ -12,43 +13,43 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 
-public class ClosureGraph<N> extends ArrayList<Pair<N, N>> {
+public class ClosureGraph<N extends Comparable<N>> extends ArrayList<ComparablePair<N, N>> {
 
     AcyclicWeightedGraph<N> g;
 
     public ClosureGraph(AcyclicWeightedGraph g) {
         this.g = g;
         this.addAll(initial());
-        List<Pair<N, N>> newPairs = this.iterate(initial());
+        List<ComparablePair<N, N>> newPairs = this.iterate(initial());
         while (newPairs.size() > 0) {
             this.addAll(newPairs);
             newPairs = this.iterate(newPairs);
         }
     }
 
-    private List<Pair<N, N>> initial() {
-        List<Pair<N,N>> result = new ArrayList<Pair<N,N>>();
-        for (N from : g.keySet()) {
+    private List<ComparablePair<N, N>> initial() {
+        List<ComparablePair<N,N>> result = new ArrayList<>();
+        for (N from : g.forward.keySet()) {
             for (N to : g.getF(from).keySet()) {
-                result.add(new Pair<>(from,to));
+                result.add(new ComparablePair<>(from,to));
             }
         }
         return result;
     }
 
-    public List<Pair<N, N>> iterate(List<Pair<N, N>> lastDerived) {
-        List<Pair<N, N>> newlyDerived = new ArrayList<>();
+    public List<ComparablePair<N, N>> iterate(List<ComparablePair<N, N>> lastDerived) {
+        List<ComparablePair<N, N>> newlyDerived = new ArrayList<>();
         // for (x,y) in lastDerived
-        for (Pair<N, N> newPair : lastDerived) {
+        for (ComparablePair<N, N> newPair : lastDerived) {
             // for (v,w) in closure
-            for (Pair<N, N> oldPair : this) {
+            for (ComparablePair<N, N> oldPair : this) {
                 if (newPair.first.equals(oldPair.second)) {
-                    Pair<N, N> candidate = new Pair<>(oldPair.first, newPair.second);
+                    ComparablePair<N, N> candidate = new ComparablePair<>(oldPair.first, newPair.second);
                     if (this.contains(candidate) || newlyDerived.contains(candidate)) continue;
                     newlyDerived.add(candidate);
                 }
                 if (newPair.second.equals(oldPair.first)) {
-                    Pair<N, N> candidate = new Pair<>(newPair.first, oldPair.second);
+                    ComparablePair<N, N> candidate = new ComparablePair<>(newPair.first, oldPair.second);
                     if (this.contains(candidate) || newlyDerived.contains(candidate)) continue;
                     newlyDerived.add(candidate);
                 }
