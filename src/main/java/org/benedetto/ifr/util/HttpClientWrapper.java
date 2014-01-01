@@ -6,11 +6,12 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.httpclient.params.HttpClientParams;
+import org.apache.http.protocol.HttpContext;
 
 import java.io.IOException;
 
 public class HttpClientWrapper {
-
 
     public static String get(final String url) throws IOException {
         HttpClient client = new HttpClient();

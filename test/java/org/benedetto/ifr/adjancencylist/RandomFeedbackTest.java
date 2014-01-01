@@ -27,16 +27,15 @@ public class RandomFeedbackTest {
     public void testTopologicalSort() {
         FeedBackGenerator feedBackGenerator = new FeedBackGenerator(5, 20, 10);
         gsonPrint(feedBackGenerator.attractivity);
-        AcyclicWeightedGraph g = new AcyclicWeightedGraph();
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph<>();
         while (feedBackGenerator.hasNext()) {
             FeedBack f = feedBackGenerator.next();
             gsonPrint(f);
             g.addFeedBack(f);
         }
-        ClosureGraph cg = new ClosureGraph(g);
-        NodeComparator nc = new NodeComparator(cg);
-        List<Integer> page = Arrays.asList(new Integer[] {4,6,8});
-        Collections.sort(page, nc);
+        ClosureGraph<Integer> cg = new ClosureGraph<>(g);
+        List<Integer> page = Arrays.asList(4,6,8);
+        cg.sort(page);
         gsonPrint(page);
     }
 

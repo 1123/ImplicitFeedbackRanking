@@ -2,10 +2,10 @@ package org.benedetto.ifr.services;
 
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.benedetto.ifr.adjancencylist.AcyclicWeightedGraph;
 import org.benedetto.ifr.adjancencylist.ClosureGraph;
 import org.benedetto.ifr.adjancencylist.FeedBack;
-import org.benedetto.ifr.adjancencylist.NodeComparator;
 import org.benedetto.ifr.flickr.FlickrCache;
 import org.benedetto.ifr.flickr.InvalidCacheRequestException;
 
@@ -15,6 +15,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,7 +44,7 @@ public class GraphService {
             @QueryParam("tags") String tags) throws IOException, InvalidCacheRequestException {
         checkArgument(number > 0);
         checkArgument(! tags.equals(""));
-        Collection<String> urlPairs = cache.getImageUrls(number, tags);
+        List<String> urlPairs = cache.getImageUrls(number, tags);
         return new Gson().toJson(urlPairs);
     }
 
@@ -54,7 +55,11 @@ public class GraphService {
     public String registerClick(@Context HttpServletRequest req, final String feedBack) throws SQLException {
         checkArgument(! feedBack.equals(""));
         AcyclicWeightedGraph<String> acyclicWeightedGraph = graphFromSession(req);
-        FeedBack fb = new Gson().fromJson(feedBack, FeedBack.class);
+        // deserialization with Gson and generic types:
+        // see : http://stackoverflow.com/questions/8989899/gson-deserialize-collections
+        FeedBack<String> fb = new FeedBack<>();
+        Type listType = TypeToken.get(fb.getClass()).getType();
+        fb = new Gson().fromJson(feedBack, listType);
         acyclicWeightedGraph.addFeedBack(fb);
         return "OK";
     }
@@ -67,16 +72,16 @@ public class GraphService {
             @Context HttpServletRequest req) throws IOException, InvalidCacheRequestException {
         checkArgument(! tags.equals(""));
         AcyclicWeightedGraph<String> acyclicWeightedGraph = this.graphFromSession(req);
-        NodeComparator<String> nc = new NodeComparator<>(new ClosureGraph<String>(acyclicWeightedGraph));
-        Collection<String> photoDetails =
+        ClosureGraph<String> closureGraph = new ClosureGraph<>(acyclicWeightedGraph);
+        List<String> photoDetails =
                 cache.getImageUrls(FlickrCache.querySize, tags);
-        List<String> photoDetailsList = new ArrayList<>(photoDetails);
-        Collections.sort(photoDetailsList, nc);
-        return new Gson().toJson(Lists.reverse(photoDetailsList));
+        closureGraph.sort(photoDetails);
+        return new Gson().toJson(photoDetails);
     }
 
     private AcyclicWeightedGraph<String> graphFromSession(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
+        @SuppressWarnings("unchecked")
         AcyclicWeightedGraph<String> acyclicWeightedGraph =
                 (AcyclicWeightedGraph<String>) session.getAttribute("graph");
         if (acyclicWeightedGraph == null) {

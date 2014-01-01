@@ -23,14 +23,14 @@ public class FlickrCacheTest {
     @Test
     public void testMultipleTags() throws IOException, InvalidCacheRequestException {
         FlickrCache cache = new FlickrCache();
-        Collection<String> urls = cache.getImageUrls(10, "Ferienwohnung Bayern");
+        List<String> urls = cache.getImageUrls(10, "Ferienwohnung Bayern");
         System.out.println(urls);
     }
 
     @Test
     public void testGetUrls() throws IOException, InvalidCacheRequestException {
         FlickrCache cache = new FlickrCache();
-        Collection<String> urls = cache.getImageUrls(10, "Ferienhaus");
+        List<String> urls = cache.getImageUrls(10, "Ferienhaus");
         System.out.println(urls);
     }
 

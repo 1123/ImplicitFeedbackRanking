@@ -12,7 +12,7 @@ import java.util.*;
 
 public class FlickrCache {
 
-    public static final int querySize = 40;
+    public static final int querySize = 200;
 
     HashMap<String, List<PhotoDetails>> cache;
 
@@ -40,28 +40,15 @@ public class FlickrCache {
         if (this.cache.containsKey(tags)) {
             return this.cache.get(tags);
         }
-        FlickrRestClient client = new FlickrRestClient();
-        List<PhotoDetails> results = client.getImages(querySize, tags);
+        List<PhotoDetails> results = FlickrRestClient.getImages(querySize, tags);
         this.cache.put(tags, results);
         return results;
     }
 
-    public Collection<String> getImageUrls(int number, String tags)
+    public List<String> getImageUrls(int number, String tags)
             throws IOException, InvalidCacheRequestException {
         List<PhotoDetails> photos = this.search(tags, number);
-        return Collections2.transform(photos, new PhotoDetails.PhotoDetails2Url());
-    }
-
-    public Collection<Pair<String, String>> getImageUrlPairs(
-            int number, String tags, ImageSize size1, ImageSize size2)
-            throws InvalidCacheRequestException, IOException {
-        List<PhotoDetails> photos = this.search(tags, number);
-        Collection<String> size1Urls =
-                Collections2.transform(photos, new PhotoDetails.PhotoDetails2Url());
-        Collection<String> size2Urls =
-                Collections2.transform(photos, new PhotoDetails.PhotoDetails2Url());
-        List<Pair<String, String>> result = MyFunctional.zip(size1Urls, size2Urls);
-        return result;
+        return MyFunctional.map(photos, new PhotoDetails.PhotoDetails2Url());
     }
 
 }

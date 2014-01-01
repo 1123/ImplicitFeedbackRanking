@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class FeedBack<N> {
 
-    N chosen;
-    List<N> page;
+    public N chosen;
+    public List<N> page;
 
     public FeedBack() { }
 

@@ -17,6 +17,8 @@ public class ClosureGraph<N extends Comparable<N>> extends ArrayList<ComparableP
 
     AcyclicWeightedGraph<N> g;
 
+    public ClosureGraph() { }
+
     public ClosureGraph(AcyclicWeightedGraph g) {
         this.g = g;
         this.addAll(initial());
@@ -56,6 +58,22 @@ public class ClosureGraph<N extends Comparable<N>> extends ArrayList<ComparableP
             }
         }
         return newlyDerived;
+    }
+
+    public void sort(List<N> toBeSorted) {
+        boolean sorted = false;
+        loop: while (! sorted) {
+            sorted = true;
+            for (ComparablePair<N,N> pair : this) {
+                int firstIndex = toBeSorted.indexOf(pair.first);
+                int secondIndex = toBeSorted.indexOf(pair.second);
+                if (firstIndex > -1 && secondIndex > -1 && firstIndex < secondIndex) { // sort in descending order
+                    Collections.swap(toBeSorted, firstIndex, secondIndex);
+                    sorted = false;
+                    continue loop;
+                }
+            }
+        }
     }
 
 }

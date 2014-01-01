@@ -2,6 +2,7 @@ package org.benedetto.ifr.flickr;
 
 import com.google.common.base.Function;
 import com.sun.istack.Nullable;
+import org.benedetto.ifr.util.Mapper;
 
 public class PhotoDetails {
 
@@ -21,13 +22,12 @@ public class PhotoDetails {
                 farm, server, id, secret);
     }
 
-    public static class PhotoDetails2Url implements Function<PhotoDetails, String> {
+    public static class PhotoDetails2Url implements Mapper<PhotoDetails, String> {
 
         @Override
-        public String apply(@Nullable PhotoDetails photoDetails) {
-            return photoDetails.getUrl();
+        public String map(PhotoDetails details) {
+            return details.getUrl();
         }
-
     }
 }
 

@@ -20,7 +20,7 @@ import java.util.*;
 public class HashMapGraph<N> {
 
     public HashMap<N, HashMap<N, Float>> forward;
-    private HashMap<N, HashMap<N, Float>> backward;
+    public HashMap<N, HashMap<N, Float>> backward;
 
     public HashMapGraph() {
         this.forward = new HashMap<>();

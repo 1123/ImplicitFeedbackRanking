@@ -25,4 +25,13 @@ public class MyFunctional {
         return result;
     }
 
+    public static <A,B> List<B> map(List<A> input, Mapper<A,B> mapper) {
+        List<B> result = new ArrayList<>();
+        for (A a : input) {
+            result.add(mapper.map(a));
+        }
+        return result;
+    }
+
 }
+

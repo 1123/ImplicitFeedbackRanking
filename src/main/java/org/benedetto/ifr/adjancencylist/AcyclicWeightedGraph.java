@@ -32,16 +32,18 @@ public class AcyclicWeightedGraph<N> extends HashMapGraph<N> {
 
     /**
      * This method returns a topological sort of the graph. This implementation seems to be false.
-     * The recursion should only start at root nodes.
+     * Assignment of weights to nodes may be false in the presence of multiple paths from a node n
+     * to a node m.
      * @return
      */
 
     public HashMap<N, Float> ranking() {
         HashMap<N, Float> result = new HashMap<>();
-        for (N start : this.nodes()) {
-            if (result.containsKey(start)) continue;
-            result.put(start, 0f);
-            this.rankingRec(start, 0f, result);
+        for (N start : this.forward.keySet()) {
+            if (this.backward.containsKey(start)) continue; // only start at root nodes.
+            if (result.containsKey(start)) continue; // node has already been visited.
+            result.put(start, 0f); // root nodes get weight 0
+            this.rankingRec(start, 0f, result); // recursive call. This will manipulate result.
         }
         return result;
     }
@@ -51,6 +53,7 @@ public class AcyclicWeightedGraph<N> extends HashMapGraph<N> {
     // 0 /         \------- 3
 
     public void rankingRec(N start, float rank, HashMap<N, Float> result) {
+        if (this.getF(start) == null) return;
         for (N next : this.getF(start).keySet()) {
             if (result.containsKey(next)) continue;
             float newRank = rank + this.getF(start).get(next);
@@ -58,5 +61,6 @@ public class AcyclicWeightedGraph<N> extends HashMapGraph<N> {
             this.rankingRec(next, newRank, result);
         }
     }
+
 }
 
