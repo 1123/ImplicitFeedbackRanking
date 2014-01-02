@@ -12,7 +12,8 @@ public class FeedBack<N> {
 
     public FeedBack() { }
 
-    public FeedBack(N chosen, List<N> page) {
+    public FeedBack(N chosen, List<N> page) throws InvalidFeedBackException {
+        if (! page.contains(chosen)) throw new InvalidFeedBackException();
         this.chosen = chosen;
         this.page = page;
     }
@@ -38,3 +39,4 @@ public class FeedBack<N> {
     }
 
 }
+

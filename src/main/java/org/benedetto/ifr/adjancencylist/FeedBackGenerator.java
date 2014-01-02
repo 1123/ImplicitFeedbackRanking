@@ -41,7 +41,7 @@ public class FeedBackGenerator implements Iterator<FeedBack<Integer>> {
     }
 
     @Override
-    public FeedBack next() {
+    public FeedBack<Integer> next() {
         if (current >= clicks) { throw new RuntimeException("No more Feedback to generate."); }
         this.current++;
         return FeedBack.randomIntFeedback(pageSize, items, attractivity);

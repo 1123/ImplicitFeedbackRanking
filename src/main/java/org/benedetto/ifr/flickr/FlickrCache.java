@@ -12,7 +12,7 @@ import java.util.*;
 
 public class FlickrCache {
 
-    public static final int querySize = 200;
+    public static final int querySize = 30;
 
     HashMap<String, List<PhotoDetails>> cache;
 

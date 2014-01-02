@@ -13,7 +13,7 @@ function submit_click(chosen) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        url: '/api/graph/click',
+        url: '/api/feedback/click',
         dataType: 'text',
         async: true,
         error: function (xhr, ajaxOptions, thrownError) {
@@ -52,7 +52,7 @@ function fill_image_table(urls) {
         var renderData = {
             key : key,
             title : urls[key],
-            smallUrl : urls[key] + "_s.jpg",
+            smallUrl : urls[key] + "_q.jpg",
             bigUrl : urls[key] + "_b.jpg",
             onclick : "submit_click(this.title)"
         };
@@ -66,7 +66,7 @@ function fill_image_table(urls) {
 /* This method calls the local web service to get a list of image urls for the given search tags */
 function search(number, tags) {
     $.getJSON(
-        '/api/graph/search_flickr?number=' + number + '&tags=' + tags,
+        '/api/searcher/search_flickr?number=' + number + '&tags=' + tags,
         function(urlPairs) { fill_image_table(urlPairs); }
     );
 }

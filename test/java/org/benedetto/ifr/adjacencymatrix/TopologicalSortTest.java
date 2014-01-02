@@ -1,10 +1,7 @@
 package org.benedetto.ifr.adjacencymatrix;
 
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import org.benedetto.ifr.adjancencylist.AcyclicWeightedGraph;
-import org.benedetto.ifr.adjancencylist.ClosureGraph;
-import org.benedetto.ifr.adjancencylist.FeedBack;
+import org.benedetto.ifr.adjancencylist.*;
 import org.benedetto.ifr.flickr.FlickrCache;
 import org.benedetto.ifr.flickr.InvalidCacheRequestException;
 import org.benedetto.ifr.util.ComparablePair;
@@ -15,26 +12,19 @@ import java.util.*;
 
 import static junit.framework.TestCase.assertTrue;
 
-/**
- * Created with IntelliJ IDEA.
- * User: linse
- * Date: 12/26/13
- * Time: 22:38
- * To change this template use File | Settings | File Templates.
- */
 public class TopologicalSortTest {
 
     @Test
-    public void test() {
-        AcyclicWeightedGraph<String> graph = new AcyclicWeightedGraph<>();
-        FeedBack first = new FeedBack("c", Arrays.asList(new String [] { "a", "b", "c" }));
-        graph.addFeedBack(first);
-        FeedBack second = new FeedBack("b", Arrays.asList(new String [] { "e", "b", "d" }));
-        graph.addFeedBack(second);
-        FeedBack third = new FeedBack("5", Arrays.asList(new String[]{"1", "2", "3", "4", "5", "6", "7"}));
-        graph.addFeedBack(third);
-        ArrayList<String> nodes = new ArrayList<>(graph.nodes());
-        new ClosureGraph<String>(graph).sort(nodes);
+    public void test() throws InvalidFeedBackException {
+        FeedBackConsumer<String> consumer = new FeedBackConsumer<>();
+        FeedBack<String> first = new FeedBack<>("c", Arrays.asList("a", "b", "c"));
+        consumer.addFeedBack(first);
+        FeedBack<String> second = new FeedBack<>("b", Arrays.asList("e", "b", "d"));
+        consumer.addFeedBack(second);
+        FeedBack<String> third = new FeedBack<>("5", Arrays.asList("1", "2", "3", "4", "5", "6", "7"));
+        consumer.addFeedBack(third);
+        ArrayList<String> nodes = new ArrayList<>(consumer.acyclicWeightedGraph.nodes());
+        new ClosureGraph<String>(consumer.acyclicWeightedGraph).sort(nodes);
         System.err.println(nodes);
         assertTrue(nodes.indexOf("a") > nodes.indexOf("c"));
         assertTrue(nodes.indexOf("b") > nodes.indexOf("c"));
@@ -49,16 +39,16 @@ public class TopologicalSortTest {
     }
 
     @Test
-    public void testWithFlickr() throws IOException, InterruptedException, InvalidCacheRequestException {
+    public void testWithFlickr() throws IOException, InterruptedException, InvalidCacheRequestException, InvalidFeedBackException {
         FlickrCache cache = new FlickrCache();
         List<String> imageUrls = cache.getImageUrls(20, "Ferienhaus");
         String selected = imageUrls.get(1);
         FeedBack<String> feedBack = new FeedBack<>(selected, imageUrls);
         System.err.println(new Gson().toJson(feedBack));
-        AcyclicWeightedGraph<String> graph = new AcyclicWeightedGraph<>();
-        graph.addFeedBack(feedBack);
+        FeedBackConsumer<String> consumer = new FeedBackConsumer<>();
+        consumer.addFeedBack(feedBack);
         List<String> allImages = cache.getImageUrls(FlickrCache.querySize, "Ferienhaus");
-        ClosureGraph<String> closureGraph = new ClosureGraph<>(graph);
+        ClosureGraph<String> closureGraph = new ClosureGraph<>(consumer.acyclicWeightedGraph);
         closureGraph.sort(allImages);
         System.err.println(allImages);
         int indexOfSelected = allImages.indexOf(selected);

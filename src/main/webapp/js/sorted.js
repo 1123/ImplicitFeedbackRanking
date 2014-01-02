@@ -11,7 +11,7 @@ function fill_image_table(urls) {
     };
     for (key in urls) {
         var renderData = {
-            url : urls[key] + '_s.jpg'
+            url : urls[key] + '_q.jpg'
         };
         var rendered = $('td.template').first().clone().render(renderData, directive);
         if (key % searchResultColumns === 0) $('#image_table').append('</tr><tr>');
@@ -22,7 +22,7 @@ function fill_image_table(urls) {
 
 function sort(tags) {
     $.getJSON(
-        '/api/graph/sort?tags=' + tags,
+        '/api/sorter/sort?tags=' + tags,
         function(urls) { fill_image_table(urls); }
     );
 }

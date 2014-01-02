@@ -3,18 +3,10 @@ package org.benedetto.ifr.adjancencylist;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.benedetto.ifr.TestUtil.gsonPrint;
 
-/**
- * Created with IntelliJ IDEA.
- * User: linse
- * Date: 11/2/13
- * Time: 18:51
- * To change this template use File | Settings | File Templates.
- */
 public class RandomFeedbackTest {
 
     /**
@@ -27,23 +19,22 @@ public class RandomFeedbackTest {
     public void testTopologicalSort() {
         FeedBackGenerator feedBackGenerator = new FeedBackGenerator(5, 20, 10);
         gsonPrint(feedBackGenerator.attractivity);
-        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph<>();
+        FeedBackConsumer<Integer> consumer = new FeedBackConsumer<>();
         while (feedBackGenerator.hasNext()) {
-            FeedBack f = feedBackGenerator.next();
-            gsonPrint(f);
-            g.addFeedBack(f);
+            FeedBack<Integer> f = feedBackGenerator.next();
+            consumer.addFeedBack(f);
         }
-        ClosureGraph<Integer> cg = new ClosureGraph<>(g);
+        ClosureGraph<Integer> cg = new ClosureGraph<>(consumer.acyclicWeightedGraph);
         List<Integer> page = Arrays.asList(4,6,8);
         cg.sort(page);
         gsonPrint(page);
     }
 
     @Test
-    public void simpleTest() {
-        AcyclicWeightedGraph acyclicWeightedGraph = new AcyclicWeightedGraph();
-        FeedBack feedBack = new FeedBack(3, Arrays.asList(new Integer[]{ 1,2,3,4,5 }));
-        acyclicWeightedGraph.addFeedBack(feedBack);
-        gsonPrint(acyclicWeightedGraph);
+    public void simpleTest() throws InvalidFeedBackException {
+        FeedBackConsumer<Integer> consumer = new FeedBackConsumer<>();
+        FeedBack<Integer> feedBack = new FeedBack<>(3, Arrays.asList(1,2,3,4,5));
+        consumer.addFeedBack(feedBack);
+        gsonPrint(consumer);
     }
 }

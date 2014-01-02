@@ -9,6 +9,7 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.benedetto.ifr.adjancencylist.FeedBack;
+import org.benedetto.ifr.adjancencylist.InvalidFeedBackException;
 import org.benedetto.ifr.util.HttpClientWrapper;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -21,13 +22,6 @@ import java.util.Random;
 
 import static junit.framework.TestCase.assertTrue;
 
-/**
- * Created with IntelliJ IDEA.
- * User: linse
- * Date: 12/28/13
- * Time: 16:56
- * To change this template use File | Settings | File Templates.
- */
 public class RestApiTest {
 
     private static final int pageSize = 3;
@@ -59,7 +53,7 @@ public class RestApiTest {
     }
 
     //@Test // this won't work, since httpclient does not use session cookies by default.
-    public void test() throws IOException, InterruptedException {
+    public void test() throws IOException, InterruptedException, InvalidFeedBackException {
         CookieStore cookieStore = new BasicCookieStore();
         HttpContext httpContext = new BasicHttpContext();
         httpContext.setAttribute(HttpClientContext.COOKIE_STORE, cookieStore);

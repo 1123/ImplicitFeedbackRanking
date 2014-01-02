@@ -1,10 +1,15 @@
 package org.benedetto.ifr.adjancencylist;
 
+import org.benedetto.ifr.flickr.FlickrCache;
+import org.benedetto.ifr.util.Pair;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 public class AcyclicWeightedGraph<N> extends HashMapGraph<N> {
+
 
     public AcyclicWeightedGraph() {
         super();
@@ -16,17 +21,6 @@ public class AcyclicWeightedGraph<N> extends HashMapGraph<N> {
         while (cycle != null && this.getF(from).containsKey(to) && this.getF(from).get(to) > 0f) {
             this.removeCycle(cycle);
             cycle = this.search(to, from);
-        }
-    }
-
-    public void addFeedBack(FeedBack<N> feedBack) {
-        // Possibly the weight should be 1.0f / page.size() - 1.
-        // The weight of the edges is in fact not important, as long as each click
-        // sums up to the same weight.
-        float weight = 1.0f / feedBack.page.size();
-        for (N item : feedBack.page) {
-            if (item.equals(feedBack.chosen)) continue;
-            this.addEdge(item, feedBack.chosen, weight);
         }
     }
 
