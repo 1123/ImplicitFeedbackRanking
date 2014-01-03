@@ -1,6 +1,7 @@
 package org.benedetto.ifr.util;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import com.google.common.base.Objects;
+import com.google.common.collect.ComparisonChain;
 
 public class ComparablePair <S extends Comparable<S>,T extends Comparable<T>>
         implements Comparable<ComparablePair<S,T>> {
@@ -22,14 +23,15 @@ public class ComparablePair <S extends Comparable<S>,T extends Comparable<T>>
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 31).append(first).append(second).hashCode();
+        return Objects.hashCode(this.first, this.second);
     }
 
     @Override
     public int compareTo(ComparablePair<S, T> o) {
-        if (this.first.compareTo(o.first) != 0) return this.first.compareTo(o.first);
-        if (this.second.compareTo(o.second) != 0) return this.second.compareTo(o.second);
-        return 0;
+        return ComparisonChain.start()
+                .compare(this.first, o.first)
+                .compare(this.second, o.second)
+                .result();
     }
 
 }

@@ -54,4 +54,12 @@ public class FeedBackService {
         return "OK";
     }
 
+    @GET
+    @Path("click_statistics")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getClickStatistics(@Context HttpServletRequest req) {
+        FeedBackConsumer<String> consumer = SessionMaintainer.consumerFromSession(req);
+        return new Gson().toJson(consumer.statistics);
+    }
+
 }

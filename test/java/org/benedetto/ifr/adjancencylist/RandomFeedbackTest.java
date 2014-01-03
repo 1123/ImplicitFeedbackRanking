@@ -17,7 +17,7 @@ public class RandomFeedbackTest {
 
     @Test
     public void testTopologicalSort() {
-        FeedBackGenerator feedBackGenerator = new FeedBackGenerator(5, 20, 10);
+        FeedBackGenerator feedBackGenerator = new FeedBackGenerator(40, 800, 800);
         gsonPrint(feedBackGenerator.attractivity);
         FeedBackConsumer<Integer> consumer = new FeedBackConsumer<>();
         while (feedBackGenerator.hasNext()) {

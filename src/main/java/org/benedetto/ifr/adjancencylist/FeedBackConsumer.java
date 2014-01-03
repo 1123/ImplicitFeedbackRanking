@@ -1,13 +1,13 @@
 package org.benedetto.ifr.adjancencylist;
 
-import org.benedetto.ifr.util.Pair;
+import org.benedetto.ifr.util.ComparablePair;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class FeedBackConsumer<N> {
 
-    Map<Pair<Integer,Integer>, Integer> statistics;
+    public Map<Integer, Map<Integer, Integer>> statistics;
     public AcyclicWeightedGraph<N> acyclicWeightedGraph;
 
     public FeedBackConsumer() {
@@ -17,14 +17,15 @@ public class FeedBackConsumer<N> {
 
     private void addToStats(FeedBack feedBack) {
         int pageLength = feedBack.page.size();
-        int chosenPosition = feedBack.page.indexOf(feedBack.chosen);
-        Pair<Integer, Integer> clickPosition = new Pair<>(pageLength, chosenPosition);
-        if (! this.statistics.containsKey(clickPosition)) {
-            this.statistics.put(clickPosition, 1);
-        } else {
-            int oldCount = this.statistics.get(clickPosition);
-            this.statistics.put(clickPosition, oldCount + 1);
+        int chosenPosition = feedBack.page.indexOf(feedBack.chosen) + 1;
+        if (! this.statistics.containsKey(pageLength)) {
+            this.statistics.put(pageLength, new HashMap<Integer,Integer>());
         }
+        if (! this.statistics.get(pageLength).containsKey(chosenPosition)) {
+            this.statistics.get(pageLength).put(chosenPosition, 0);
+        }
+        int oldValue = this.statistics.get(pageLength).get(chosenPosition);
+        this.statistics.get(pageLength).put(chosenPosition, oldValue + 1);
     }
 
     public void addFeedBack(FeedBack<N> feedBack) {
