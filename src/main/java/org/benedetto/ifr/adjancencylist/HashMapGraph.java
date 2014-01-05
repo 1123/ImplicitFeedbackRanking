@@ -17,7 +17,7 @@ import java.util.*;
  * @param <N>: The datatype of the Nodes. Might be Integers, Strings, Urls, etc.
  */
 
-public class HashMapGraph<N> {
+public class HashMapGraph<N extends Comparable<N>> {
 
     public HashMap<N, HashMap<N, Float>> forward;
     public HashMap<N, HashMap<N, Float>> backward;
@@ -41,11 +41,6 @@ public class HashMapGraph<N> {
         return this.forward.get(key);
     }
 
-    /* get backward edge */
-    public HashMap<N, Float> getB(N key) {
-        return this.backward.get(key);
-    }
-
     private void addForwardEdge(N from, N to, Float weight) {
         if (forward.containsKey(from)) {
             if (forward.get(from).containsKey(to)) {
@@ -55,7 +50,7 @@ public class HashMapGraph<N> {
                 forward.get(from).put(to, weight);
             }
         } else {
-            HashMap outgoing = new HashMap<N, Float>();
+            HashMap<N, Float> outgoing = new HashMap<>();
             outgoing.put(to, weight);
             forward.put(from, outgoing);
         }
@@ -70,7 +65,7 @@ public class HashMapGraph<N> {
                 backward.get(to).put(from, weight);
             }
         } else {
-            HashMap incoming = new HashMap<N, Float>();
+            HashMap<N, Float> incoming = new HashMap<>();
             incoming.put(from, weight);
             backward.put(to, incoming);
         }

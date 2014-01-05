@@ -1,15 +1,9 @@
 package org.benedetto.ifr.adjancencylist;
 
-import org.benedetto.ifr.flickr.FlickrCache;
-import org.benedetto.ifr.util.Pair;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class AcyclicWeightedGraph<N> extends HashMapGraph<N> {
-
+public class AcyclicWeightedGraph<N extends Comparable<N>> extends HashMapGraph<N> {
 
     public AcyclicWeightedGraph() {
         super();
@@ -28,7 +22,6 @@ public class AcyclicWeightedGraph<N> extends HashMapGraph<N> {
      * This method returns a topological sort of the graph. This implementation seems to be false.
      * Assignment of weights to nodes may be false in the presence of multiple paths from a node n
      * to a node m.
-     * @return
      */
 
     public HashMap<N, Float> ranking() {

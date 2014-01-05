@@ -1,23 +1,14 @@
 package launch;
 
-import java.io.File;
-
-import org.apache.catalina.Context;
-import org.apache.catalina.LifecycleException;
-import org.apache.catalina.Wrapper;
 import org.apache.catalina.startup.Tomcat;
-import org.junit.Test;
-import org.junit.experimental.theories.suppliers.TestedOn;
-
-import javax.servlet.ServletException;
 
 public class Main {
 
     public static Tomcat tomcat = new Tomcat();
 
     public static void main(String[] args) throws Exception {
-        //The port that we should run on can be set into an environment variable
-        //Look for that variable and default to 8080 if it isn't there.
+        // The port that we should run on can be set into an environment variable
+        // Look for that variable and default to 8080 if it isn't there.
         String webPort = System.getenv("PORT");
         if(webPort == null || webPort.isEmpty()) {
             webPort = "9090";

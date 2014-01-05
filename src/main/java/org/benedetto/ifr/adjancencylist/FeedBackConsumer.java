@@ -1,11 +1,9 @@
 package org.benedetto.ifr.adjancencylist;
 
-import org.benedetto.ifr.util.ComparablePair;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class FeedBackConsumer<N> {
+public class FeedBackConsumer<N extends Comparable<N>> {
 
     public Map<Integer, Map<Integer, Integer>> statistics;
     public AcyclicWeightedGraph<N> acyclicWeightedGraph;
