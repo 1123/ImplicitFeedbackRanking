@@ -2,6 +2,9 @@ package org.benedetto.ifr.adjacencymatrix;
 
 import com.google.gson.Gson;
 import org.benedetto.ifr.adjancencylist.*;
+import org.benedetto.ifr.feedback.AwgFeedBackConsumer;
+import org.benedetto.ifr.feedback.FeedBack;
+import org.benedetto.ifr.feedback.InvalidFeedBackException;
 import org.benedetto.ifr.flickr.FlickrCache;
 import org.benedetto.ifr.flickr.InvalidCacheRequestException;
 import org.benedetto.ifr.util.ComparablePair;
@@ -16,7 +19,7 @@ public class TopologicalSortTest {
 
     @Test
     public void test() throws InvalidFeedBackException {
-        FeedBackConsumer<String> consumer = new FeedBackConsumer<>();
+        AwgFeedBackConsumer<String> consumer = new AwgFeedBackConsumer<>();
         FeedBack<String> first = new FeedBack<>("c", Arrays.asList("a", "b", "c"));
         consumer.addFeedBack(first);
         FeedBack<String> second = new FeedBack<>("b", Arrays.asList("e", "b", "d"));
@@ -45,7 +48,7 @@ public class TopologicalSortTest {
         String selected = imageUrls.get(1);
         FeedBack<String> feedBack = new FeedBack<>(selected, imageUrls);
         System.err.println(new Gson().toJson(feedBack));
-        FeedBackConsumer<String> consumer = new FeedBackConsumer<>();
+        AwgFeedBackConsumer<String> consumer = new AwgFeedBackConsumer<>();
         consumer.addFeedBack(feedBack);
         List<String> allImages = cache.getImageUrls(FlickrCache.querySize, "Ferienhaus");
         ClosureGraph<String> closureGraph = new ClosureGraph<>(consumer.acyclicWeightedGraph);

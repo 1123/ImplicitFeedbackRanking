@@ -1,5 +1,9 @@
 package org.benedetto.ifr.adjancencylist;
 
+import org.benedetto.ifr.feedback.AwgFeedBackConsumer;
+import org.benedetto.ifr.feedback.FeedBack;
+import org.benedetto.ifr.feedback.FeedBackGenerator;
+import org.benedetto.ifr.feedback.InvalidFeedBackException;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -19,7 +23,7 @@ public class RandomFeedbackTest {
     public void testTopologicalSort() {
         FeedBackGenerator feedBackGenerator = new FeedBackGenerator(10, 50, 100);
         gsonPrint(feedBackGenerator.attractivity);
-        FeedBackConsumer<Integer> consumer = new FeedBackConsumer<>();
+        AwgFeedBackConsumer<Integer> consumer = new AwgFeedBackConsumer<>();
         while (feedBackGenerator.hasNext()) {
             FeedBack<Integer> f = feedBackGenerator.next();
             consumer.addFeedBack(f);
@@ -32,7 +36,7 @@ public class RandomFeedbackTest {
 
     @Test
     public void simpleTest() throws InvalidFeedBackException {
-        FeedBackConsumer<Integer> consumer = new FeedBackConsumer<>();
+        AwgFeedBackConsumer<Integer> consumer = new AwgFeedBackConsumer<>();
         FeedBack<Integer> feedBack = new FeedBack<>(3, Arrays.asList(1,2,3,4,5));
         consumer.addFeedBack(feedBack);
         gsonPrint(consumer);

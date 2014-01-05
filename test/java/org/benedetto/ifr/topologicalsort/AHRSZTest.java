@@ -25,7 +25,7 @@ public class AHRSZTest {
         ahrsz.addEdge('A','B',0.1f);
         ahrsz.addEdge('C','D',0.1f);
         ahrsz.addEdge('C','A',0.1f);
-        assertTrue(ahrsz.before('A','B'));
+        assertTrue(ahrsz.before('A', 'B'));
         assertTrue(ahrsz.before('C','D'));
         assertTrue(ahrsz.before('C','A'));
     }
@@ -43,26 +43,34 @@ public class AHRSZTest {
         ahrsz.addEdge('C','E',0.1f);
         ahrsz.addEdge('E','F',0.1f);
         ahrsz.addEdge('G','F',0.1f);
-        assertTrue(ahrsz.before('A','B'));
-        assertTrue(ahrsz.before('C','E'));
-        assertTrue(ahrsz.before('E','F'));
-        assertTrue(ahrsz.before('G','F'));
-        assertTrue(ahrsz.before('G','A'));
-        ahrsz.addEdge('E','A',0.1f);
-        assertTrue(ahrsz.before('G','C'));
-        assertTrue(ahrsz.before('C','E'));
-        assertTrue(ahrsz.before('E','A'));
-        assertTrue(ahrsz.before('A','B'));
-        assertTrue(ahrsz.before('B','F'));
+        assertTrue(ahrsz.before('A', 'B'));
+        assertTrue(ahrsz.before('C', 'E'));
+        assertTrue(ahrsz.before('E', 'F'));
+        assertTrue(ahrsz.before('G', 'F'));
+        assertTrue(ahrsz.before('G', 'A'));
+        ahrsz.addEdge('E', 'A', 0.1f);
+        assertTrue(ahrsz.before('G', 'C'));
+        assertTrue(ahrsz.before('C', 'E'));
+        assertTrue(ahrsz.before('E', 'A'));
+        assertTrue(ahrsz.before('A', 'B'));
+        assertTrue(ahrsz.before('B', 'F'));
     }
 
-    @Test(expected=CycleException.class)
+    @Test
     public void testMultipleNodeCycle() throws CycleException {
         Ahrsz<Integer> ahrsz = new Ahrsz<>();
-        ahrsz.addEdge(1,2,0.1f);
-        ahrsz.addEdge(2,3,0.1f);
-        ahrsz.addEdge(3,4,0.1f);
-        ahrsz.addEdge(4,1,0.1f);
+        ahrsz.addEdge(1,2,0.2f);
+        ahrsz.addEdge(2,3,0.4f);
+        ahrsz.addEdge(3,4,0.3f);
+        ahrsz.addEdge(4,1,0.5f);
+        assertTrue(ahrsz.before(2,3));
+        assertTrue(ahrsz.before(3,4));
+        assertTrue(ahrsz.before(4,1));
+    }
+
+    @Test
+    public void testWithFeedBack() {
+
     }
 
 

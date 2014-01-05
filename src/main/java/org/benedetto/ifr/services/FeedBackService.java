@@ -2,8 +2,8 @@ package org.benedetto.ifr.services;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.benedetto.ifr.adjancencylist.FeedBack;
-import org.benedetto.ifr.adjancencylist.FeedBackConsumer;
+import org.benedetto.ifr.feedback.AwgFeedBackConsumer;
+import org.benedetto.ifr.feedback.FeedBack;
 import org.benedetto.ifr.flickr.FlickrCache;
 import org.benedetto.ifr.services.utils.SessionMaintainer;
 
@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  *
- * This class exposes the Functionality of the FeedBackConsumer via REST.
+ * This class exposes the Functionality of the AwgFeedBackConsumer via REST.
  * It is part of the Backend.
  *
  **/
@@ -34,7 +34,7 @@ public class FeedBackService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getGraph(@Context HttpServletRequest req) {
-        FeedBackConsumer consumer = (FeedBackConsumer) req.getSession().getAttribute("consumer");
+        AwgFeedBackConsumer consumer = (AwgFeedBackConsumer) req.getSession().getAttribute("consumer");
         return new Gson().toJson(consumer.acyclicWeightedGraph);
     }
 
@@ -44,7 +44,7 @@ public class FeedBackService {
     @Produces(MediaType.APPLICATION_JSON)
     public String registerClick(@Context HttpServletRequest req, final String feedBack) throws SQLException {
         checkArgument(! feedBack.equals(""));
-        FeedBackConsumer<String> consumer = SessionMaintainer.consumerFromSession(req);
+        AwgFeedBackConsumer<String> consumer = SessionMaintainer.consumerFromSession(req);
         // deserialization with Gson and generic types:
         // see : http://stackoverflow.com/questions/8989899/gson-deserialize-collections
         FeedBack<String> fb = new FeedBack<>();
@@ -58,7 +58,7 @@ public class FeedBackService {
     @Path("click_statistics")
     @Produces(MediaType.APPLICATION_JSON)
     public String getClickStatistics(@Context HttpServletRequest req) {
-        FeedBackConsumer<String> consumer = SessionMaintainer.consumerFromSession(req);
+        AwgFeedBackConsumer<String> consumer = SessionMaintainer.consumerFromSession(req);
         return new Gson().toJson(consumer.statistics);
     }
 

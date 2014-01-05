@@ -2,7 +2,8 @@ package org.benedetto.ifr.services;
 
 import com.google.gson.Gson;
 import org.benedetto.ifr.adjancencylist.ClosureGraph;
-import org.benedetto.ifr.adjancencylist.FeedBackConsumer;
+import org.benedetto.ifr.feedback.AwgFeedBackConsumer;
+import org.benedetto.ifr.feedback.FeedBackConsumer;
 import org.benedetto.ifr.flickr.FlickrCache;
 import org.benedetto.ifr.flickr.InvalidCacheRequestException;
 import org.benedetto.ifr.services.utils.SessionMaintainer;
@@ -34,7 +35,7 @@ public class SortService {
             @QueryParam("tags") String tags,
             @Context HttpServletRequest req) throws IOException, InvalidCacheRequestException {
         checkArgument(! tags.equals(""));
-        FeedBackConsumer<String> consumer = SessionMaintainer.consumerFromSession(req);
+        AwgFeedBackConsumer<String> consumer = SessionMaintainer.consumerFromSession(req);
         ClosureGraph<String> closureGraph = new ClosureGraph<>(consumer.acyclicWeightedGraph);
         List<String> photoDetails =
                 cache.getImageUrls(FlickrCache.querySize, tags);

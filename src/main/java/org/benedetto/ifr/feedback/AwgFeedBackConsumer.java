@@ -1,14 +1,16 @@
-package org.benedetto.ifr.adjancencylist;
+package org.benedetto.ifr.feedback;
+
+import org.benedetto.ifr.adjancencylist.AcyclicWeightedGraph;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class FeedBackConsumer<N extends Comparable<N>> {
+public class AwgFeedBackConsumer<N extends Comparable<N>> implements FeedBackConsumer<N>{
 
     public Map<Integer, Map<Integer, Integer>> statistics;
     public AcyclicWeightedGraph<N> acyclicWeightedGraph;
 
-    public FeedBackConsumer() {
+    public AwgFeedBackConsumer() {
         statistics = new HashMap<>();
         acyclicWeightedGraph = new AcyclicWeightedGraph<>();
     }

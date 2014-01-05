@@ -1,4 +1,4 @@
-package org.benedetto.ifr.adjancencylist;
+package org.benedetto.ifr.feedback;
 
 import java.util.*;
 

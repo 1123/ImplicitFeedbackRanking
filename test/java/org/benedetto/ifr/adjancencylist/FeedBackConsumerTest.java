@@ -1,5 +1,8 @@
 package org.benedetto.ifr.adjancencylist;
 
+import org.benedetto.ifr.feedback.AwgFeedBackConsumer;
+import org.benedetto.ifr.feedback.FeedBack;
+import org.benedetto.ifr.feedback.InvalidFeedBackException;
 import org.benedetto.ifr.util.ComparablePair;
 import org.junit.Test;
 
@@ -12,7 +15,7 @@ public class FeedBackConsumerTest {
     @Test
     public void testStatistics() throws InvalidFeedBackException {
         FeedBack<Integer> first = new FeedBack<>(3, Arrays.asList(1,2,3));
-        FeedBackConsumer<Integer> consumer = new FeedBackConsumer<>();
+        AwgFeedBackConsumer<Integer> consumer = new AwgFeedBackConsumer<>();
         consumer.addFeedBack(first);
         FeedBack<Integer> second = new FeedBack<>(2, Arrays.asList(4,3,2));
         consumer.addFeedBack(second);
@@ -26,7 +29,7 @@ public class FeedBackConsumerTest {
 
     @Test(expected=InvalidFeedBackException.class)
     public void testInvalidFeedBack() throws InvalidFeedBackException {
-        FeedBackConsumer<Integer> consumer = new FeedBackConsumer<>();
+        AwgFeedBackConsumer<Integer> consumer = new AwgFeedBackConsumer<>();
         consumer.addFeedBack(new FeedBack<>(3, Arrays.asList(1,2)));
     }
 
