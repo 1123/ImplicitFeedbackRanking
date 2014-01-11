@@ -98,6 +98,7 @@ public class HashMapGraph<N extends Comparable<N>> {
     }
 
     public void removeCycle(List<N> cycle) {
+        System.err.println("removing cycle: " + cycle);
         N minFrom = cycle.get(cycle.size() - 1);
         N minTo = cycle.get(0);
         float minWeight = forward.get(minFrom).get(minTo);
@@ -113,6 +114,7 @@ public class HashMapGraph<N extends Comparable<N>> {
     }
 
     private void decreaseCycle(List<N> cycle, float decrement) {
+        System.err.println("decreasing cycle");
         N firstFrom = cycle.get(cycle.size() - 1);
         N firstTo = cycle.get(0);
         float firstEdgeWeight = forward.get(firstFrom).get(firstTo) - decrement;
@@ -135,5 +137,11 @@ public class HashMapGraph<N extends Comparable<N>> {
                 backward.get(to).put(from, edgeWeight);
             }
         }
+    }
+
+    public boolean has_edge(N from, N to) {
+        if (! this.forward.containsKey(from)) return false;
+        if (! this.forward.get(from).containsKey(to)) return false;
+        return (! FloatUtils.floatEqual(this.forward.get(from).get(to), 0f));
     }
 }

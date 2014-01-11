@@ -1,7 +1,10 @@
 package org.benedetto.ifr.topologicalsort;
 
+import com.google.common.collect.Lists;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Path<N extends Comparable> extends ArrayList<N> implements Comparable<Path<N>> {
 
@@ -33,4 +36,18 @@ public class Path<N extends Comparable> extends ArrayList<N> implements Comparab
         // possible BUG: elements within the priority queue should be compared using node2index.
         return thisLast.compareTo(otherLast);
     }
+
+    boolean ascending(Map<N, Integer> node2index) {
+        int max = node2index.get(this.get(0));
+        for (N elem : this) {
+            if (node2index.get(elem) < max) return false;
+        }
+        return true;
+    }
+
+    boolean descending(Map<N, Integer> node2index) {
+        Path reverse = new Path(Lists.reverse(this));
+        return reverse.ascending(node2index);
+    }
+
 }

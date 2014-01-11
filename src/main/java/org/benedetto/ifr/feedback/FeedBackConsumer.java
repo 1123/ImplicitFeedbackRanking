@@ -1,5 +1,8 @@
 package org.benedetto.ifr.feedback;
 
+import org.benedetto.ifr.topologicalsort.InvalidAhrszStateException;
+import org.benedetto.ifr.topologicalsort.InvalidExpansionStateException;
+
 /**
  * Created with IntelliJ IDEA.
  * User: linse
@@ -9,6 +12,6 @@ package org.benedetto.ifr.feedback;
  */
 public interface FeedBackConsumer<N> {
 
-    public void addFeedBack(FeedBack<N> feedBack);
+    public void addFeedBack(FeedBack<N> feedBack) throws InvalidExpansionStateException, InvalidAhrszStateException;
 
 }

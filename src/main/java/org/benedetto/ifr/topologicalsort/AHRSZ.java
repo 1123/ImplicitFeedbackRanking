@@ -7,15 +7,13 @@ import java.util.*;
 
 public class Ahrsz<N extends Comparable<N>> {
 
-    private HashMapGraph<N> hashMapGraph;
-    private Map<N,Integer> node2Index;
-    private Map<Integer, N> index2Node;
+    public HashMapGraph<N> hashMapGraph;
+    public Map<N,Integer> node2Index;
     private int maxIndex;
     private int minIndex;
 
     public Ahrsz() {
         node2Index = new HashMap<>();
-        index2Node = new HashMap<>();
         maxIndex = 1;  // the index of the next top insertion
         minIndex = 0;  // the index of the next bottom insertion
         hashMapGraph = new HashMapGraph<>();
@@ -23,11 +21,10 @@ public class Ahrsz<N extends Comparable<N>> {
 
     private void put(N node, int index) {
         this.node2Index.put(node, index);
-        this.index2Node.put(index, node);
     }
 
-    public void addEdge(N from, N to, float weight) throws CycleException {
-        if (from.equals(to)) throw new CycleException();
+    public void addEdge(N from, N to, float weight) throws InvalidExpansionStateException, InvalidAhrszStateException {
+        if (from.equals(to)) return;
         hashMapGraph.addEdge(from, to, weight);
         // both nodes are new.
         if (! node2Index.containsKey(from) && ! node2Index.containsKey(to)) {
@@ -50,6 +47,8 @@ public class Ahrsz<N extends Comparable<N>> {
         if (node2Index.get(from) < node2Index.get(to)) return;
         // neither of the nodes are new, and the new edge requires a reordering.
         reorder(from,to);
+        // TODO: this is for development purposes only. It should be removed when AHRSZ is stable.
+        // AhrszChecker.checkAhrsz(this);
     }
 
     private void insertTop(N from, N to) {
@@ -63,115 +62,86 @@ public class Ahrsz<N extends Comparable<N>> {
      *
      * @param from source of the new edge
      * @param to sink of the new edge
-     * @throws CycleException
      */
 
-    private void reorder(final N from, final N to) throws CycleException {
-        boolean expanded = false;
-        List<N> shiftUp = null;
-        List<N> shiftDown = null;
-        while (!expanded) {
-            PriorityQueue<Path<N>> backwardQueue = new PriorityQueue<>();
-            Path<N> fromPath = new Path<>(from);
-            backwardQueue.add(fromPath);
-            PriorityQueue<Path<N>> forwardQueue =
-                    new PriorityQueue<>(11, Collections.reverseOrder());
-            Path<N> toPath = new Path<>(to);
-            forwardQueue.add(toPath);
-            shiftUp = new ArrayList<>();
-            shiftUp.add(to);
-            shiftDown = new ArrayList<>();
-            shiftDown.add(from);
-            expanded = expand(forwardQueue, backwardQueue, from, to, shiftUp, shiftDown);
+    private void reorder(final N from, final N to) throws InvalidExpansionStateException {
+        ExpansionState<N> es = new ExpansionState<>(from, to);
+        while (! es.success) { // repeat until no more cycles found
+            // the edge to be inserted may be removed when cycles are detected.
+            // Once this newly inserted edge has been removed, there is no need to reorder.
+            if (! this.hashMapGraph.has_edge(from, to)) return;
+            es = new ExpansionState<>(from, to);
+            this.expand(es);
         }
-        switchPositions(shiftUp, shiftDown);
+        // es.check(this.node2Index);
+        switchPositions(es.shiftUp, es.shiftDown);
     }
 
-    private boolean expand(
-            PriorityQueue<Path<N>> forwardQueue,
-            PriorityQueue<Path<N>> backwardQueue,
-            final N from, final N to,
-            List<N> shiftUp,
-            List<N> shiftDown
-    ) throws CycleException {
-        if (! expandForward(forwardQueue, backwardQueue, from, shiftUp)) return false;
-        if (! expandBackward(forwardQueue, backwardQueue, to, shiftDown)) return false;
-        if ((! forwardQueue.isEmpty()) || (! backwardQueue.isEmpty())) {
-            if (! expand(forwardQueue, backwardQueue, from, to, shiftUp, shiftDown)) return false;
+    private void expand(ExpansionState<N> es) throws InvalidExpansionStateException {
+        // while the frontiers are not empty.
+        while (! es.finished()) {
+            es.success = expandForward(es);
+            if (! es.success) return;
+            // es.check(this.node2Index);
+            es.success = expandBackward(es);
+            if (! es.success) return;
+            // es.check(this.node2Index);
         }
-        return true;
     }
 
-    private boolean expandBackward(PriorityQueue<Path<N>> forwardQueue,
-            PriorityQueue<Path<N>> backwardQueue, final N to,
-            List<N> shiftDown) throws CycleException {
+    private boolean expandBackward(ExpansionState<N> es) {
         // take the node with the highest priority from the backwardQueue
         // and examine all predecessors.
-        if (backwardQueue.isEmpty()) return true;
-        Path<N> highestPath = backwardQueue.remove();
+        if (es.backwardQueue.isEmpty()) { return true; }
+        Path<N> highestPath = es.backwardQueue.remove();
         N highest = highestPath.get(highestPath.size() - 1);
         if (this.hashMapGraph.backward.get(highest) == null) return true;
         for (N predecessor : this.hashMapGraph.backward.get(highest).keySet()) {
-            if (node2Index.get(predecessor) <= node2Index.get(to)) continue;
-            if (detectAndRemoveCycle(forwardQueue, predecessor, highestPath)) return false;
+            if (node2Index.get(predecessor) <= node2Index.get(es.to)) continue;
+            if (detectAndRemoveCycle(es.forwardQueue, predecessor, highestPath, direction.backward)) return false;
             Path<N> predecessorPath = new Path<N>(highestPath);
             predecessorPath.add(predecessor);
-            backwardQueue.add(predecessorPath);
-            shiftDown.add(predecessor);
+            es.backwardQueue.add(predecessorPath);
+            es.shiftDown.add(predecessor);
         }
         return true;
     }
 
-    /**
-     * This method looks for nodes that must be assigned a new priority in forward direction,
-     * starting at the end/sink of the newly inserted edge. This method is recursive.
-     *
-     * @param from is the source of the newly inserted edge.
-     *             This is an upper bound for all nodes that may need to be assigned a new priority.
-     * @param forwardQueue is the priority queue containing all paths which must be further
-     *                     expanded in the search for nodes to be prioritized. This method takes one
-     *                     element from the forwardQueue and may add one ore more new paths to it.
-     * @param backwardQueue contains all paths currently expanded in backward direction. This+
-     *                      parameter is not manipulated, but only queried for detecting cycles.
-     * @param shiftUp contains all nodes whose priority must be increased. This method may
-     *                add additional nodes to this list.
-     *
-     * @return false if and only if a cycle has been detected and removed. True if no cycle has
-     * been found. In this case shiftUp contains the nodes whose priority
-     * must be increased, shiftDown contains the nodes whose priorities must be decreased.
-     *
-     **/
-
-    private boolean expandForward(PriorityQueue<Path<N>> forwardQueue,
-            final PriorityQueue<Path<N>> backwardQueue, final N from,
-            List<N> shiftUp) throws CycleException {
-        if (forwardQueue.isEmpty()) return true;
+    private boolean expandForward(ExpansionState<N> es) {
+        if (es.forwardQueue.isEmpty()) { return true; }
         // take the node with the lowest priority from the forwardQueue,
         // and examine all successors.
-        Path<N> lowestPath = forwardQueue.remove();
+        Path<N> lowestPath = es.forwardQueue.remove();
         N lowest = lowestPath.get(lowestPath.size() - 1);
+        // check if there are any outgoing edges from the end of the lowest path.
         if (this.hashMapGraph.forward.get(lowest) == null) return true;
         for (N successor : this.hashMapGraph.forward.get(lowest).keySet()) {
+            if (detectAndRemoveCycle(es.backwardQueue, successor, lowestPath, direction.forward)) return false;
             // only add nodes to the frontier that have higher priority then the source of the
             // new edge.
-            if (node2Index.get(successor) >= node2Index.get(from)) continue;
-            if (detectAndRemoveCycle(backwardQueue, successor, lowestPath)) return false;
+            if (node2Index.get(successor) >= node2Index.get(es.from)) continue;
             Path<N> successorPath = new Path<N>(lowestPath);
             successorPath.add(successor);
-            forwardQueue.add(successorPath);
-            shiftUp.add(successor);
+            es.forwardQueue.add(successorPath);
+            es.shiftUp.add(successor);
         }
         return true;
     }
 
+    private enum direction { forward, backward }
+
     private boolean detectAndRemoveCycle(
-            PriorityQueue<Path<N>> queue, N successor, Path<N> path) {
+            PriorityQueue<Path<N>> queue, N successor, Path<N> path, direction dir) {
         if (! queue.contains(new Path<>(successor))) return false;
         ArrayList<Path<N>> backwardList = new ArrayList<>(queue);
         int index = backwardList.indexOf(new Path<>(successor));
         path.addAll(Lists.reverse(backwardList.get(index)));
         // TODO: we may need to add the edge from->to to the cycle.
-        this.hashMapGraph.removeCycle(path);
+        if (dir == direction.forward) {
+            this.hashMapGraph.removeCycle(path);
+        } else {
+            this.hashMapGraph.removeCycle(Lists.reverse(path));
+        }
         return true;
     }
 
@@ -179,13 +149,21 @@ public class Ahrsz<N extends Comparable<N>> {
         return this.node2Index.get(n1) < this.node2Index.get(n2);
     }
 
-    private void switchPositions(List<N> shiftUp, List<N> shiftDown) {
-        List<N> oldOrder = new ArrayList<>();
-        oldOrder.addAll(shiftUp);
-        oldOrder.addAll(Lists.reverse(shiftDown));
-        List<N> newOrder = new ArrayList<>();
-        newOrder.addAll(Lists.reverse(shiftDown));
-        newOrder.addAll(shiftUp);
+    private List<N> sortByIndex(Collection<N> toBeSorted) {
+        List<N> result = new ArrayList<>(toBeSorted);
+        Collections.sort(result, new IndexComparator<N>(this.node2Index));
+        return result;
+    }
+
+    public void switchPositions(final Set<N> shiftUp, final Set<N> shiftDown) {
+        List<N> shiftUpSorted = sortByIndex(shiftUp);
+        List<N> shiftDownSorted = sortByIndex(shiftDown);
+        System.err.println(String.format("switching positions: up: %s; down: %s", shiftUp, shiftDown));
+        List<N> oldOrder = new ArrayList<>(shiftUpSorted);
+        oldOrder.addAll(new ArrayList<>(shiftDownSorted));
+        Collections.sort(oldOrder, new IndexComparator<>(this.node2Index));
+        List<N> newOrder = new ArrayList<>(shiftDownSorted);
+        newOrder.addAll(shiftUpSorted);
         HashMap<N, Integer> newNode2Index = new HashMap<>();
         int position = 0;
         for (N n: oldOrder) {
