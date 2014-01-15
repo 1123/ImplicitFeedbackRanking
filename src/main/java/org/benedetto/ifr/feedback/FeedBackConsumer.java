@@ -1,7 +1,10 @@
 package org.benedetto.ifr.feedback;
 
+import org.benedetto.ifr.flickr.PhotoDetails;
 import org.benedetto.ifr.topologicalsort.InvalidAhrszStateException;
 import org.benedetto.ifr.topologicalsort.InvalidExpansionStateException;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,4 +17,7 @@ public interface FeedBackConsumer<N> {
 
     public void addFeedBack(FeedBack<N> feedBack) throws InvalidExpansionStateException, InvalidAhrszStateException;
 
+    public Statistics getStatistics();
+
+    void sort(List<N> toBeSorted);
 }

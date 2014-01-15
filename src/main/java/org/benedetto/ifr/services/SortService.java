@@ -35,11 +35,10 @@ public class SortService {
             @QueryParam("tags") String tags,
             @Context HttpServletRequest req) throws IOException, InvalidCacheRequestException {
         checkArgument(! tags.equals(""));
-        AwgFeedBackConsumer<String> consumer = SessionMaintainer.consumerFromSession(req);
-        ClosureGraph<String> closureGraph = new ClosureGraph<>(consumer.acyclicWeightedGraph);
+        FeedBackConsumer<String> consumer = SessionMaintainer.consumerFromSession(req);
         List<String> photoDetails =
                 cache.getImageUrls(FlickrCache.querySize, tags);
-        closureGraph.sort(photoDetails);
+        consumer.sort(photoDetails);
         return new Gson().toJson(photoDetails);
     }
 

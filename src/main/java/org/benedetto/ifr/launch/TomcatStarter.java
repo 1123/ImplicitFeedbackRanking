@@ -1,4 +1,4 @@
-package launch;
+package org.benedetto.ifr.launch;
 
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;

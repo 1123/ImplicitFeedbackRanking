@@ -101,7 +101,7 @@ public class AhrszTest {
 
     @Test
     public void testWithRandomFeedBack() throws InvalidExpansionStateException, InvalidAhrszStateException {
-        FeedBackGenerator generator = new FeedBackGenerator(20, 10000, 20000);
+        FeedBackGenerator generator = new FeedBackGenerator(40, 2000, 5000);
         FeedBackConsumer<Integer> consumer = new AhrszFeedBackConsumer<>();
         while (generator.hasNext()) {
             FeedBack<Integer> next = generator.next();

@@ -13,6 +13,8 @@ public class IndexComparator<N extends Comparable<N>> implements Comparator<N> {
 
     @Override
     public int compare(N o1, N o2) {
+        if (node2index.get(o1) == null) return 0;
+        if (node2index.get(o2) == null) return 0;
         return node2index.get(o1).compareTo(node2index.get(o2));
     }
 }

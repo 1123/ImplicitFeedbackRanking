@@ -92,7 +92,7 @@
                     <assembleDirectory>target</assembleDirectory>
                     <programs>
                         <program>
-                            <mainClass>launch.Main</mainClass>
+                            <mainClass>org.benedetto.ifr.launch.Main</mainClass>
                             <name>webapp</name>
                         </program>
                     </programs>

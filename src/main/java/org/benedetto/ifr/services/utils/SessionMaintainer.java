@@ -1,19 +1,21 @@
 package org.benedetto.ifr.services.utils;
 
+import org.benedetto.ifr.feedback.AhrszFeedBackConsumer;
 import org.benedetto.ifr.feedback.AwgFeedBackConsumer;
+import org.benedetto.ifr.feedback.FeedBackConsumer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class SessionMaintainer {
 
-    public static AwgFeedBackConsumer<String> consumerFromSession(HttpServletRequest request) {
+    public static FeedBackConsumer<String> consumerFromSession(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
         @SuppressWarnings("unchecked")
-        AwgFeedBackConsumer<String> consumer =
-                (AwgFeedBackConsumer<String>) session.getAttribute("consumer");
+        FeedBackConsumer<String> consumer =
+                (FeedBackConsumer<String>) session.getAttribute("consumer");
         if (consumer == null) {
-            consumer = new AwgFeedBackConsumer<>();
+            consumer = new AhrszFeedBackConsumer<>();
             session.setAttribute("consumer", consumer);
         }
         return consumer;
