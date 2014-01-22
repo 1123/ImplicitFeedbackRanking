@@ -7,6 +7,13 @@ import java.util.Random;
 
 public class FeedBack<N> {
 
+    /*
+     * This class generates Clicks (FeedBack) under the assumption that each item has an inherent attractivity.
+     * This generator selects those items where attractivity(item) + random(0,1) is maximal.
+     * Many other selection criteria are possible.
+     * Items with higher attractivity have a greater chance of being clicked than items with low attractivity.
+     */
+
     public N chosen;
     public List<N> page;
 
@@ -18,25 +25,6 @@ public class FeedBack<N> {
         this.page = page;
     }
 
-    public static FeedBack<Integer> randomIntFeedback(int pageSize, int items, Map<Integer, Float> attractivity) {
-        FeedBack<Integer> result = new FeedBack<>();
-        if (pageSize > items) throw new RuntimeException("Pagesize must be smaller or equal to the number of items.");
-        result.page = new ArrayList<>();
-        Random r = new Random();
-        result.chosen = 0;
-        float maxWeight = 0f;
-        while (result.page.size() < pageSize) {
-            int item = r.nextInt(items);
-            if (result.page.contains(item)) continue;
-            result.page.add(item);
-            float weight = attractivity.get(item) + r.nextFloat();
-            if (weight > maxWeight) {
-                result.chosen = item;
-                maxWeight = weight;
-            }
-        }
-        return result;
-    }
 
 }
 

@@ -1,7 +1,6 @@
 package org.benedetto.ifr.topologicalsort;
 
 import com.google.gson.Gson;
-import junit.framework.Assert;
 import org.benedetto.ifr.feedback.*;
 import org.junit.Test;
 
@@ -101,7 +100,7 @@ public class AhrszTest {
 
     @Test
     public void testWithRandomFeedBack() throws InvalidExpansionStateException, InvalidAhrszStateException {
-        FeedBackGenerator generator = new FeedBackGenerator(40, 2000, 5000);
+        MaxAttractivityFeedbackGenerator generator = new MaxAttractivityFeedbackGenerator(40, 2000, 5000);
         FeedBackConsumer<Integer> consumer = new AhrszFeedBackConsumer<>();
         while (generator.hasNext()) {
             FeedBack<Integer> next = generator.next();
