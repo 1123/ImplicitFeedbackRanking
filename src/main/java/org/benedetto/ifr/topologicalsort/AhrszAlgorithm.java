@@ -5,14 +5,14 @@ import org.benedetto.ifr.adjancencylist.HashMapGraph;
 
 import java.util.*;
 
-public class Ahrsz<N extends Comparable<N>> {
+public class AhrszAlgorithm<N extends Comparable<N>> {
 
     public HashMapGraph<N> hashMapGraph;
     public Map<N,Integer> node2Index;
     private int maxIndex;
     private int minIndex;
 
-    public Ahrsz() {
+    public AhrszAlgorithm() {
         node2Index = new HashMap<>();
         maxIndex = 1;  // the index of the next top insertion
         minIndex = 0;  // the index of the next bottom insertion

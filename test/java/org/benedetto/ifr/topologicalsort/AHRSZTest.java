@@ -14,7 +14,7 @@ public class AhrszTest {
 
     @Test
     public void testSingleEdge() throws InvalidExpansionStateException, InvalidAhrszStateException {
-        Ahrsz<Integer> ahrsz = new Ahrsz<>();
+        AhrszAlgorithm<Integer> ahrsz = new AhrszAlgorithm<>();
         ahrsz.addEdge(1,2,0.1f);
         assert(ahrsz.before(1,2));
     }
@@ -26,7 +26,7 @@ public class AhrszTest {
 
     @Test
     public void testReorder() throws InvalidExpansionStateException, InvalidAhrszStateException {
-        Ahrsz<Character> ahrsz = new Ahrsz<>();
+        AhrszAlgorithm<Character> ahrsz = new AhrszAlgorithm<>();
         ahrsz.addEdge('A','B',0.1f);
         ahrsz.addEdge('C','D',0.1f);
         ahrsz.addEdge('C', 'A', 0.1f);
@@ -37,13 +37,13 @@ public class AhrszTest {
 
     @Test
     public void testSingleNodeCycle() throws InvalidExpansionStateException, InvalidAhrszStateException {
-        Ahrsz<Integer> ahrsz = new Ahrsz<>();
+        AhrszAlgorithm<Integer> ahrsz = new AhrszAlgorithm<>();
         ahrsz.addEdge(1, 1, 0.1f);
     }
 
     @Test
     public void testComplexGraph() throws InvalidExpansionStateException, InvalidAhrszStateException {
-        Ahrsz<Character> ahrsz = new Ahrsz<>();
+        AhrszAlgorithm<Character> ahrsz = new AhrszAlgorithm<>();
         ahrsz.addEdge('A','B',0.1f);
         ahrsz.addEdge('C','E',0.1f);
         ahrsz.addEdge('E','F',0.1f);
@@ -63,7 +63,7 @@ public class AhrszTest {
 
     @Test
     public void testMultipleNodeCycle() throws InvalidExpansionStateException, InvalidAhrszStateException {
-        Ahrsz<Integer> ahrsz = new Ahrsz<>();
+        AhrszAlgorithm<Integer> ahrsz = new AhrszAlgorithm<>();
         ahrsz.addEdge(1, 2, 0.2f);
         ahrsz.addEdge(2, 3, 0.4f);
         ahrsz.addEdge(3, 4, 0.3f);
@@ -144,7 +144,7 @@ public class AhrszTest {
     public void testSwitchPositions() throws InvalidExpansionStateException, InvalidAhrszStateException {
         Set<Integer> shiftUp = new TreeSet<>(Arrays.asList(1));
         Set<Integer> shiftDown = new TreeSet<>(Arrays.asList(0,5,8));
-        Ahrsz<Integer> ahrsz = new Ahrsz<>();
+        AhrszAlgorithm<Integer> ahrsz = new AhrszAlgorithm<>();
         ahrsz.addEdge(2,1,1f);
         ahrsz.addEdge(0,8,1f);
         ahrsz.addEdge(8,5,1f);
@@ -161,7 +161,7 @@ public class AhrszTest {
     public void testSwitchPositions2() throws InvalidAhrszStateException {
         Set<Integer> shiftUp = new TreeSet<>(Arrays.asList(10,15));
         Set<Integer> shiftDown = new TreeSet<>(Arrays.asList(2,4,5,19));
-        Ahrsz<Integer> ahrsz = new Ahrsz<>();
+        AhrszAlgorithm<Integer> ahrsz = new AhrszAlgorithm<>();
         ahrsz.node2Index.put(15,-4);
         ahrsz.node2Index.put(5,-3);
         ahrsz.node2Index.put(4,0);

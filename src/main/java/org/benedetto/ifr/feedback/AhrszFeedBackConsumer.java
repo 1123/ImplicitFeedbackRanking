@@ -2,7 +2,7 @@ package org.benedetto.ifr.feedback;
 
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import org.benedetto.ifr.topologicalsort.Ahrsz;
+import org.benedetto.ifr.topologicalsort.AhrszAlgorithm;
 import org.benedetto.ifr.topologicalsort.IndexComparator;
 import org.benedetto.ifr.topologicalsort.InvalidAhrszStateException;
 import org.benedetto.ifr.topologicalsort.InvalidExpansionStateException;
@@ -12,12 +12,12 @@ import java.util.List;
 
 public class AhrszFeedBackConsumer<N extends Comparable<N>> implements FeedBackConsumer<N> {
 
-    public Ahrsz<N> ahrsz;
+    public AhrszAlgorithm<N> ahrsz;
     Gson gson = new Gson();
     Statistics statistics;
 
     public AhrszFeedBackConsumer() {
-        ahrsz = new Ahrsz<>();
+        ahrsz = new AhrszAlgorithm<>();
         statistics = new Statistics();
     }
 
