@@ -4,4 +4,6 @@ gfembed*
 .idea/
 target/
 frontend.iml
+velocity.log
+expediaData/
 

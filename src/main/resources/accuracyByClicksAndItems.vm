@@ -1,0 +1,6 @@
+values = matrix(c($values), $cols)
+persp3D(z = values, x = 1: nrow(values), y = 1:ncol(values),
+        expand = 0.03, main = "Accuracy by clicks and items with page size $pageSize", facets = FALSE, scale = FALSE,
+        clab = "accuracy in 1/1000", ylab = "clicks (unit : $clicksStep)", xlab = "items (unit: $itemsStep)",
+        zlab = "accuracy in 1/1000",
+        colkey = list(side = 1, length = 0.2), nticks = 4, ticktype = "detailed", theta=210)

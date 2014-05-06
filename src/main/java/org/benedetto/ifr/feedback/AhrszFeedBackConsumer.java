@@ -28,7 +28,6 @@ public class AhrszFeedBackConsumer<N extends Comparable<N>> implements FeedBackC
     @Override
     public void addFeedBack(FeedBack<N> feedBack) throws InvalidExpansionStateException, InvalidAhrszStateException {
         this.statistics.addToStats(feedBack);
-        System.err.println(new Gson().toJson(feedBack));
         float weight = 1.0f / feedBack.page.size();
         for (N item : feedBack.page) {
             if (item.equals(feedBack.chosen)) continue;

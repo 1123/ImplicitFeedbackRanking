@@ -158,7 +158,6 @@ public class AhrszAlgorithm<N extends Comparable<N>> {
     public void switchPositions(final Set<N> shiftUp, final Set<N> shiftDown) {
         List<N> shiftUpSorted = sortByIndex(shiftUp);
         List<N> shiftDownSorted = sortByIndex(shiftDown);
-        System.err.println(String.format("switching positions: up: %s; down: %s", shiftUp, shiftDown));
         List<N> oldOrder = new ArrayList<>(shiftUpSorted);
         oldOrder.addAll(new ArrayList<>(shiftDownSorted));
         Collections.sort(oldOrder, new IndexComparator<>(this.node2Index));

@@ -21,7 +21,7 @@ public class RandomFeedbackTest {
 
     @Test
     public void testTopologicalSort() {
-        MaxAttractivityFeedbackGenerator feedBackGenerator = new MaxAttractivityFeedbackGenerator(10, 50, 100);
+        MaxAttractivityFeedbackGenerator feedBackGenerator = new MaxAttractivityFeedbackGenerator(10, 50, 100, 1.0f);
         gsonPrint(feedBackGenerator.attractivity);
         AwgFeedBackConsumer<Integer> consumer = new AwgFeedBackConsumer<>();
         while (feedBackGenerator.hasNext()) {

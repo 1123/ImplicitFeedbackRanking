@@ -1,0 +1,34 @@
+\documentclass{beamer}
+
+%gets rid of bottom navigation bars
+\setbeamertemplate{footline}[]{}
+%gets rid of navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+\begin{document}
+
+\begin{frame}
+\begin{itemize}
+  \item Items $i_1 \ldots i_n \in \mathcal{I}$
+  \item pages are of size $k$
+  \item Positions $p_i \ldots p_k \in \mathcal{P}$
+
+  \item 
+    
+    $a : \mathcal{I} \rightarrow [0,1]$ maps items to their attractivity
+
+  \item 
+  
+    $p : \mathcal{P} \rightarrow [0,1]$ maps positions to their click
+    probability
+
+  \item 
+    
+    Given a search results page $s := i_{s_1} \ldots i_{s_k}$ and random
+    numbers $0 \leq z_i \leq 1$, the user selects the item $i_{s_i}$ where
+    $a(i_{s_i}) + p(i) + z_i$ is maximal.
+
+\end{itemize}
+\end{frame}
+
+\end{document}

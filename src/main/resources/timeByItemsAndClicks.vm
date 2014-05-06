@@ -1,0 +1,5 @@
+values = matrix(c($values), $cols)
+persp3D(z = values, x = 1: nrow(values), y = 1:ncol(values),
+        expand = 0.1, main = "Run time by items and clicks with page size $pageSize", facets = FALSE, scale = FALSE,
+        clab = "runtime", xlab = "items (unit : $itemsStep)", ylab = "clicks (unit: $clicksStep)", zlab = "runtime in ms",
+        colkey = list(side = 1, length = 0.2), nticks = 4, ticktype = "detailed", theta=300)

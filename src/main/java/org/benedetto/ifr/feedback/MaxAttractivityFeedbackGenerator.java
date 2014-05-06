@@ -9,8 +9,22 @@ public class MaxAttractivityFeedbackGenerator implements FeedBackGenerator<Integ
     int pageSize;
     int clicks;
     private int current;
+    float randomness;
 
     public HashMap<Integer, Float> attractivity;
+
+    /*
+     * randomness is the ratio randomattractivity / attractivity.
+     */
+
+    public MaxAttractivityFeedbackGenerator(int pageSize, int clicks, int items, float randomness) {
+        this.items = items;
+        this.pageSize = pageSize;
+        this.clicks = clicks;
+        this.initalizeItems();
+        this.current = 0;
+        this.randomness = randomness;
+    }
 
     private void initalizeItems() {
         this.attractivity = new HashMap<>();
@@ -20,12 +34,23 @@ public class MaxAttractivityFeedbackGenerator implements FeedBackGenerator<Integ
         }
     }
 
-    public MaxAttractivityFeedbackGenerator(int pageSize, int clicks, int items) {
-        this.items = items;
-        this.pageSize = pageSize;
-        this.clicks = clicks;
-        this.initalizeItems();
-        this.current = 0;
+    class AttractivityComparator implements Comparator<Integer> {
+
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return attractivity.get(o1).compareTo(attractivity.get(o2));
+        }
+
+    }
+
+    public List<Integer> getItems() {
+        return new ArrayList<>(attractivity.keySet());
+    }
+
+    public List<Integer> getSortedItems() {
+        List<Integer> items = new ArrayList<>(attractivity.keySet());
+        Collections.sort(items, new AttractivityComparator());
+        return items;
     }
 
     @Override
@@ -37,7 +62,7 @@ public class MaxAttractivityFeedbackGenerator implements FeedBackGenerator<Integ
     public FeedBack<Integer> next() {
         if (current >= clicks) { throw new RuntimeException("No more Feedback to generate."); }
         this.current++;
-        return randomIntFeedback(pageSize, items, attractivity);
+        return randomIntFeedback(pageSize, items, attractivity, randomness);
     }
 
     @Override
@@ -45,7 +70,8 @@ public class MaxAttractivityFeedbackGenerator implements FeedBackGenerator<Integ
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    private static FeedBack<Integer> randomIntFeedback(int pageSize, int items, Map<Integer, Float> attractivity) {
+    private static FeedBack<Integer> randomIntFeedback(
+            int pageSize, int items, Map<Integer, Float> attractivity, float randomness) {
         FeedBack<Integer> result = new FeedBack<>();
         if (pageSize > items) throw new RuntimeException("Pagesize must be smaller or equal to the number of items.");
         result.page = new ArrayList<>();
@@ -56,7 +82,7 @@ public class MaxAttractivityFeedbackGenerator implements FeedBackGenerator<Integ
             int item = r.nextInt(items);
             if (result.page.contains(item)) continue;
             result.page.add(item);
-            float weight = attractivity.get(item) + r.nextFloat();
+            float weight = attractivity.get(item) + randomness * r.nextFloat();
             if (weight > maxWeight) {
                 result.chosen = item;
                 maxWeight = weight;
