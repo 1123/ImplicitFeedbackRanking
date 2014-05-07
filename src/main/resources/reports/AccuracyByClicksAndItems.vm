@@ -2,16 +2,17 @@
 <html>
 <head>
     <title></title>
-    <script src="../three.min.js"></script>
+    <script src="../../../three.min.js"></script>
 </head>
 <body>
-    <script src="plotchart.js"></script>
+    <script src="../../plotchart.js"></script>
     <script>
         plot_axes();
         render();
         var values = $values;
+        var normalized = normalize(values);
         console.log("drawing grid");
-        plot_matrix(values);
+        plot_matrix(normalized);
     </script>
 </body>
 </html>

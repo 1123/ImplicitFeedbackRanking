@@ -75,7 +75,7 @@ var plot_axes = function() {
     axis(new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, 10 ));
 };
 
-var normalize = function(matrix) {
+var find_maximum = function(matrix) {
     var max = 0.0;
     for (var i = 0; i < matrix.length; i++) {
         for (var j = 0; j < matrix[i].length; j++) {
@@ -85,6 +85,11 @@ var normalize = function(matrix) {
             }
         }
     }
+    return max;
+};
+
+var normalize = function(matrix) {
+    var max = find_maximum(matrix);
     var normalized = [];
     for (var i = 0; i < matrix.length; i++) {
         normalized[i] = []
@@ -95,3 +100,4 @@ var normalize = function(matrix) {
     console.log(normalized);
     return normalized;
 };
+

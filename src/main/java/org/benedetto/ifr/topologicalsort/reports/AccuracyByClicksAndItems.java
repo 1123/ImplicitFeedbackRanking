@@ -10,7 +10,7 @@ import org.benedetto.ifr.topologicalsort.InvalidAhrszStateException;
 import org.benedetto.ifr.topologicalsort.InvalidExpansionStateException;
 import org.benedetto.ifr.topologicalsort.SortDistance;
 
-import java.io.StringWriter;
+import java.io.*;
 import java.util.List;
 
 /*
@@ -40,7 +40,7 @@ public class AccuracyByClicksAndItems {
     static final int iterations = 5;
     static final int pageSize = 10;
 
-    public static void main(String [] args) throws InvalidExpansionStateException, InvalidAhrszStateException {
+    public static void main(String [] args) throws InvalidExpansionStateException, InvalidAhrszStateException, FileNotFoundException, UnsupportedEncodingException {
         float [][] measurements = new float[numClickMeasurements][numItemMeasurements];
         for (int i = 0; i < numClickMeasurements; i++) {
             int clicks = minClicks + i * clicksStep;
@@ -65,7 +65,10 @@ public class AccuracyByClicksAndItems {
             }
         }
         System.err.println(serializeToR(measurements));
-        System.err.println(serializeToHtml(measurements));
+        PrintWriter writer = new PrintWriter(new File("src/main/resources/reports/generated/html/AccuracyByClicksAndItems.html"), "UTF-8");
+        writer.print(serializeToHtml(measurements));
+        writer.flush();
+        writer.close();
     }
 
     public static String serializeToR(float[][] measurement) {
