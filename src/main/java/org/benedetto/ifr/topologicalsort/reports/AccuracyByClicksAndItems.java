@@ -1,6 +1,6 @@
 package org.benedetto.ifr.topologicalsort.reports;
 
-import org.apache.hadoop.util.StringUtils;
+import com.google.gson.Gson;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.benedetto.ifr.feedback.AhrszFeedBackConsumer;
@@ -11,7 +11,6 @@ import org.benedetto.ifr.topologicalsort.InvalidExpansionStateException;
 import org.benedetto.ifr.topologicalsort.SortDistance;
 
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -34,11 +33,11 @@ import java.util.List;
 public class AccuracyByClicksAndItems {
     static final int minItems = 10;
     static final int itemsStep = 20;
-    static final int numItemMeasurements = 30;
+    static final int numItemMeasurements = 10;
     static final int minClicks = 10;
     static final int clicksStep = 20;
-    static final int numClickMeasurements = 30;
-    static final int iterations = 10;
+    static final int numClickMeasurements = 10;
+    static final int iterations = 5;
     static final int pageSize = 10;
 
     public static void main(String [] args) throws InvalidExpansionStateException, InvalidAhrszStateException {
@@ -65,10 +64,11 @@ public class AccuracyByClicksAndItems {
                 System.err.println(String.format("clicks: %d, items: %d, accuracy: %s", clicks, items, accuracy));
             }
         }
-        System.err.println(searializeResults(measurements));
+        System.err.println(serializeToR(measurements));
+        System.err.println(serializeToHtml(measurements));
     }
 
-    public static String searializeResults(float [][] measurement) {
+    public static String serializeToR(float[][] measurement) {
         VelocityContext context = new VelocityContext();
         context.put("values", ReportUtils.matrixToString(measurement));
         context.put("cols", measurement[0].length);
@@ -80,6 +80,20 @@ public class AccuracyByClicksAndItems {
         t.merge(context, w);
         return w.toString();
     }
+
+    public static String serializeToHtml(float[][] measurement) {
+        VelocityContext context = new VelocityContext();
+        context.put("values", ReportUtils.matrixToJavascript(measurement));
+        context.put("cols", measurement[0].length);
+        context.put("clicksStep", clicksStep);
+        context.put("pageSize", pageSize);
+        context.put("itemsStep", itemsStep);
+        StringWriter w = new StringWriter();
+        Template t = Context.getVelocityEngine().getTemplate("reports/AccuracyByClicksAndItems.vm");
+        t.merge(context, w);
+        return w.toString();
+    }
+
 
 }
 

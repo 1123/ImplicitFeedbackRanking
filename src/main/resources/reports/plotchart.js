@@ -3,7 +3,7 @@ var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight
 var renderer = new THREE.WebGLRenderer({ alpha : true });
 renderer.setSize(window.innerWidth - 100, window.innerHeight - 100);
 document.body.appendChild(renderer.domElement);
-camera.position.set(3,7,10);
+camera.position.set(14,6,10);
 camera.up = new THREE.Vector3(0,0,1);
 camera.lookAt(new THREE.Vector3(0,0,0));
 
@@ -15,7 +15,6 @@ plane.translateY(5);
 scene.add( plane );
 
 var material = new THREE.LineBasicMaterial({ side: THREE.DoubleSide, color: 0x0000ff });
-
 
 var axis = function(from, to) {
     var geometry = new THREE.Geometry();
@@ -63,6 +62,7 @@ var plot_matrix = function(matrix) {
     }
 };
 
+
 var plot_axes = function() {
     // x-axis
     console.log("drawing x-axis");
@@ -75,9 +75,23 @@ var plot_axes = function() {
     axis(new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, 10 ));
 };
 
-plot_axes();
-render();
-
-var values = [[1,1.1,1.2,1.3,1.4], [1.1,1.3,1.4,1.5,1.7], [1.2,1.3,1.4,1.6,1.8], [1.3,1.4,1.6,1.7,2.0], [1.4,1.6,1.8,2.0,2.4]];
-console.log("drawing grid");
-plot_matrix(values);
+var normalize = function(matrix) {
+    var max = 0.0;
+    for (var i = 0; i < matrix.length; i++) {
+        for (var j = 0; j < matrix[i].length; j++) {
+            if (matrix[i][j] > max) {
+                max = matrix[i][j];
+                console.log("max: " + max);
+            }
+        }
+    }
+    var normalized = [];
+    for (var i = 0; i < matrix.length; i++) {
+        normalized[i] = []
+        for (var j = 0; j < matrix[i].length; j++) {
+            normalized[i][j] = matrix[i][j] * 5 / max;
+        }
+    }
+    console.log(normalized);
+    return normalized;
+};

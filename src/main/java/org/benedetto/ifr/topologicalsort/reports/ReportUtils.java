@@ -1,5 +1,6 @@
 package org.benedetto.ifr.topologicalsort.reports;
 
+import com.google.gson.Gson;
 import org.apache.hadoop.util.StringUtils;
 
 import java.util.ArrayList;
@@ -18,4 +19,10 @@ public class ReportUtils {
         }
         return StringUtils.join(", " + System.getProperty("line.separator"), lines);
     }
+
+    public static String matrixToJavascript(float[][] measurement) {
+        Gson gson = new Gson();
+        return gson.toJson(measurement);
+    }
+
 }
