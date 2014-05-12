@@ -79,7 +79,7 @@ public class AccuracyByClicksAndItems {
         context.put("pageSize", pageSize);
         context.put("itemsStep", itemsStep);
         StringWriter w = new StringWriter();
-        Template t = Context.getVelocityEngine().getTemplate("accuracyByClicksAndItems.vm");
+        Template t = Context.getVelocityEngine().getTemplate("reports/templates/R/accuracyByClicksAndItems.vm");
         t.merge(context, w);
         return w.toString();
     }
@@ -92,7 +92,7 @@ public class AccuracyByClicksAndItems {
         context.put("pageSize", pageSize);
         context.put("itemsStep", itemsStep);
         StringWriter w = new StringWriter();
-        Template t = Context.getVelocityEngine().getTemplate("reports/AccuracyByClicksAndItems.vm");
+        Template t = Context.getVelocityEngine().getTemplate("reports/templates/html/AccuracyByClicksAndItems.vm");
         t.merge(context, w);
         return w.toString();
     }

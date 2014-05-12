@@ -60,7 +60,7 @@ public class TimeByItemsAndClicks {
         context.put("pageSize", pageSize);
         context.put("itemsStep", itemsStep);
         StringWriter w = new StringWriter();
-        Template t = Context.getVelocityEngine().getTemplate("timeByItemsAndClicks.vm");
+        Template t = Context.getVelocityEngine().getTemplate("reports/templates/R/timeByItemsAndClicks.vm");
         t.merge(context, w);
         return w.toString();
     }

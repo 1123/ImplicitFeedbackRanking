@@ -101,7 +101,7 @@ public class TimeByClicksAndPageSize {
         context.put("items", plotconfiguration.items);
         context.put("pageSizeStep", plotconfiguration.pageSizeStep);
         StringWriter w = new StringWriter();
-        Template t = Context.getVelocityEngine().getTemplate("timeByClicksAndPageSize.vm");
+        Template t = Context.getVelocityEngine().getTemplate("reports/templates/R/timeByClicksAndPageSize.vm");
         t.merge(context, w);
         return w.toString();
     }

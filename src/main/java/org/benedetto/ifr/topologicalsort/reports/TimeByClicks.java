@@ -18,9 +18,9 @@ public class TimeByClicks {
     static final int pageSize = 5;
     static final int items = 100;
     static final float randomness = 1.0f;
-    static final int iterations = 10;
+    static final int iterations = 5;
     static final int clicksStep = 150;
-    static final int maxClicks = 4000;
+    static final int maxClicks = 1500;
     static final int minClicks = 50;
 
     public static void main( String args [] ) throws InvalidExpansionStateException, InvalidAhrszStateException {
