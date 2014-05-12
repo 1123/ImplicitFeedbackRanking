@@ -33,10 +33,10 @@ import java.util.List;
 public class AccuracyByClicksAndItems {
     static final int minItems = 10;
     static final int itemsStep = 20;
-    static final int numItemMeasurements = 10;
+    static final int numItemMeasurements = 20;
     static final int minClicks = 10;
     static final int clicksStep = 20;
-    static final int numClickMeasurements = 10;
+    static final int numClickMeasurements = 20;
     static final int iterations = 5;
     static final int pageSize = 10;
 

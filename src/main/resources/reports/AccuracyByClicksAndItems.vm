@@ -3,14 +3,17 @@
 <head>
     <title></title>
     <script src="../../../three.min.js"></script>
+    <script src="../../../jquery.min.js"></script>
+    <script src="../../../tinycolor.js"></script>
 </head>
 <body>
     <script src="../../plotchart.js"></script>
+    <script src="../../colors.js"></script>
     <script>
         plot_axes();
         render();
         var values = $values;
-        var normalized = normalize(values);
+        var normalized = normalize(values, 10.0);
         console.log("drawing grid");
         plot_matrix(normalized);
     </script>
