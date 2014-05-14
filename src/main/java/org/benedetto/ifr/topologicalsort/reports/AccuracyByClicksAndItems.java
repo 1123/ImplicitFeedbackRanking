@@ -32,12 +32,12 @@ import java.util.List;
 
 public class AccuracyByClicksAndItems {
     static final int minItems = 10;
-    static final int itemsStep = 20;
-    static final int numItemMeasurements = 20;
+    static final int itemsStep = 30;
+    static final int numItemMeasurements = 30;
     static final int minClicks = 10;
     static final int clicksStep = 20;
-    static final int numClickMeasurements = 20;
-    static final int iterations = 5;
+    static final int numClickMeasurements = 30;
+    static final int iterations = 10;
     static final int pageSize = 10;
 
     public static void main(String [] args) throws InvalidExpansionStateException, InvalidAhrszStateException, FileNotFoundException, UnsupportedEncodingException {
@@ -91,6 +91,10 @@ public class AccuracyByClicksAndItems {
         context.put("clicksStep", clicksStep);
         context.put("pageSize", pageSize);
         context.put("itemsStep", itemsStep);
+        context.put("minItems", minItems);
+        context.put("minClicks", minClicks);
+        context.put("maxClicks", minClicks + clicksStep * numClickMeasurements);
+        context.put("maxItems", minItems + itemsStep * numItemMeasurements);
         StringWriter w = new StringWriter();
         Template t = Context.getVelocityEngine().getTemplate("reports/templates/html/AccuracyByClicksAndItems.vm");
         t.merge(context, w);

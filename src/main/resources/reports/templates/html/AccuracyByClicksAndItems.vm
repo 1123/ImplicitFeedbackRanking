@@ -5,16 +5,22 @@
     <script src="../../../three.min.js"></script>
     <script src="../../../jquery.min.js"></script>
     <script src="../../../tinycolor.js"></script>
+    <script src="../../../TrackBallControls.js"></script>
+    <script src="../../../helvetiker_font/helvetiker_regular.typeface.js"></script>
 </head>
 <body>
     <script src="../../plotchart.js"></script>
     <script src="../../colors.js"></script>
     <script>
-        plot_axes();
         render();
         var values = $values;
-        var normalized = normalize(values, 10.0);
+        var normalized = normalize(values);
+        normalized.minX = $minItems + " items";
+        normalized.minY = $minClicks + " clicks";
+        normalized.maxX = $maxItems + " items";
+        normalized.maxY = $maxClicks + " clicks";
         console.log("drawing grid");
+        plot_axes(normalized);
         plot_matrix(normalized);
     </script>
 </body>
