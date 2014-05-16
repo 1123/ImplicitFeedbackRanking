@@ -2,10 +2,8 @@ package org.benedetto.ifr.services;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.benedetto.ifr.feedback.AhrszFeedBackConsumer;
-import org.benedetto.ifr.feedback.AwgFeedBackConsumer;
 import org.benedetto.ifr.feedback.FeedBack;
-import org.benedetto.ifr.feedback.FeedBackConsumer;
+import org.benedetto.ifr.feedback.consumers.FeedBackConsumer;
 import org.benedetto.ifr.flickr.FlickrCache;
 import org.benedetto.ifr.services.utils.SessionMaintainer;
 import org.benedetto.ifr.topologicalsort.InvalidAhrszStateException;

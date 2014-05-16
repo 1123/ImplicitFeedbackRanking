@@ -1,5 +1,7 @@
-package org.benedetto.ifr.feedback;
+package org.benedetto.ifr.feedback.consumers;
 
+import org.benedetto.ifr.feedback.FeedBack;
+import org.benedetto.ifr.feedback.Statistics;
 import org.benedetto.ifr.flickr.PhotoDetails;
 import org.benedetto.ifr.topologicalsort.InvalidAhrszStateException;
 import org.benedetto.ifr.topologicalsort.InvalidExpansionStateException;

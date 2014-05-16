@@ -1,13 +1,10 @@
 package org.benedetto.ifr.topologicalsort;
 
-import com.google.common.base.Functions;
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import org.apache.hadoop.util.StringUtils;
-import org.benedetto.ifr.feedback.AhrszFeedBackConsumer;
 import org.benedetto.ifr.feedback.FeedBack;
-import org.benedetto.ifr.feedback.FeedBackConsumer;
-import org.benedetto.ifr.feedback.MaxAttractivityFeedbackGenerator;
+import org.benedetto.ifr.feedback.consumers.AhrszFeedBackConsumer;
+import org.benedetto.ifr.feedback.consumers.FeedBackConsumer;
+import org.benedetto.ifr.feedback.generators.MaxAttractivityFeedbackGenerator;
 import org.junit.Ignore;
 import org.junit.Test;
 

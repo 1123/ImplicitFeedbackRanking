@@ -2,6 +2,7 @@ package org.benedetto.ifr.topologicalsort;
 
 import com.google.gson.Gson;
 import org.benedetto.ifr.feedback.*;
+import org.benedetto.ifr.feedback.consumers.AhrszFeedBackConsumer;
 import org.junit.Test;
 
 import java.util.Arrays;

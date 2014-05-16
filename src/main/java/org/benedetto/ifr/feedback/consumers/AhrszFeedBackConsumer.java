@@ -1,7 +1,9 @@
-package org.benedetto.ifr.feedback;
+package org.benedetto.ifr.feedback.consumers;
 
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+import org.benedetto.ifr.feedback.FeedBack;
+import org.benedetto.ifr.feedback.Statistics;
 import org.benedetto.ifr.topologicalsort.AhrszAlgorithm;
 import org.benedetto.ifr.topologicalsort.IndexComparator;
 import org.benedetto.ifr.topologicalsort.InvalidAhrszStateException;

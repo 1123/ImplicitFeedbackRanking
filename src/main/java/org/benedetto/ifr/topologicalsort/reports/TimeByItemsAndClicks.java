@@ -2,9 +2,9 @@ package org.benedetto.ifr.topologicalsort.reports;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.benedetto.ifr.feedback.AhrszFeedBackConsumer;
-import org.benedetto.ifr.feedback.FeedBackConsumer;
-import org.benedetto.ifr.feedback.MaxAttractivityFeedbackGenerator;
+import org.benedetto.ifr.feedback.consumers.AhrszFeedBackConsumer;
+import org.benedetto.ifr.feedback.consumers.FeedBackConsumer;
+import org.benedetto.ifr.feedback.generators.MaxAttractivityFeedbackGenerator;
 import org.benedetto.ifr.topologicalsort.InvalidAhrszStateException;
 import org.benedetto.ifr.topologicalsort.InvalidExpansionStateException;
 

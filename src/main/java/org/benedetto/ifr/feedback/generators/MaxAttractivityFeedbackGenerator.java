@@ -1,4 +1,6 @@
-package org.benedetto.ifr.feedback;
+package org.benedetto.ifr.feedback.generators;
+
+import org.benedetto.ifr.feedback.FeedBack;
 
 import java.util.*;
 

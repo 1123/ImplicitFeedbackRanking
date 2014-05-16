@@ -1,9 +1,9 @@
 package org.benedetto.ifr.adjancencylist;
 
-import org.benedetto.ifr.feedback.AwgFeedBackConsumer;
 import org.benedetto.ifr.feedback.FeedBack;
-import org.benedetto.ifr.feedback.MaxAttractivityFeedbackGenerator;
 import org.benedetto.ifr.feedback.InvalidFeedBackException;
+import org.benedetto.ifr.feedback.consumers.AwgFeedBackConsumer;
+import org.benedetto.ifr.feedback.generators.MaxAttractivityFeedbackGenerator;
 import org.junit.Test;
 
 import java.util.Arrays;

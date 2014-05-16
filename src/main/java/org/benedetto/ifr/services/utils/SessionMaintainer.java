@@ -1,8 +1,7 @@
 package org.benedetto.ifr.services.utils;
 
-import org.benedetto.ifr.feedback.AhrszFeedBackConsumer;
-import org.benedetto.ifr.feedback.AwgFeedBackConsumer;
-import org.benedetto.ifr.feedback.FeedBackConsumer;
+import org.benedetto.ifr.feedback.consumers.AhrszFeedBackConsumer;
+import org.benedetto.ifr.feedback.consumers.FeedBackConsumer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

@@ -1,7 +1,9 @@
-package org.benedetto.ifr.feedback;
+package org.benedetto.ifr.feedback.consumers;
 
 import org.benedetto.ifr.adjancencylist.AcyclicWeightedGraph;
 import org.benedetto.ifr.adjancencylist.ClosureGraph;
+import org.benedetto.ifr.feedback.FeedBack;
+import org.benedetto.ifr.feedback.Statistics;
 
 import java.util.List;
 

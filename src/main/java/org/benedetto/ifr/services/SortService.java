@@ -2,8 +2,7 @@ package org.benedetto.ifr.services;
 
 import com.google.gson.Gson;
 import org.benedetto.ifr.adjancencylist.ClosureGraph;
-import org.benedetto.ifr.feedback.AwgFeedBackConsumer;
-import org.benedetto.ifr.feedback.FeedBackConsumer;
+import org.benedetto.ifr.feedback.consumers.FeedBackConsumer;
 import org.benedetto.ifr.flickr.FlickrCache;
 import org.benedetto.ifr.flickr.InvalidCacheRequestException;
 import org.benedetto.ifr.services.utils.SessionMaintainer;

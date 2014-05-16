@@ -1,5 +1,6 @@
 package org.benedetto.ifr.feedback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FeedBack<N> {
@@ -14,7 +15,9 @@ public class FeedBack<N> {
     public N chosen;
     public List<N> page;
 
-    public FeedBack() { }
+    public FeedBack() {
+        this.page = new ArrayList<>();
+    }
 
     public FeedBack(N chosen, List<N> page) throws InvalidFeedBackException {
         if (! page.contains(chosen)) throw new InvalidFeedBackException();

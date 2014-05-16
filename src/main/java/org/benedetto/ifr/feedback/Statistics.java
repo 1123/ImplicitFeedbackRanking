@@ -3,6 +3,10 @@ package org.benedetto.ifr.feedback;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+ * This class is used to maintain the number of clicks by page size and position.
+ */
+
 public class Statistics extends HashMap<Integer, Map<Integer, Integer>> {
 
     public  void addToStats(FeedBack feedBack) {

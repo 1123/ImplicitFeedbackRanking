@@ -3,10 +3,7 @@ package org.benedetto.ifr.topologicalsort.reports;
 import com.google.common.base.Functions;
 import com.google.common.collect.Lists;
 import org.apache.hadoop.util.StringUtils;
-import org.benedetto.ifr.feedback.AhrszFeedBackConsumer;
-import org.benedetto.ifr.feedback.FeedBack;
-import org.benedetto.ifr.feedback.FeedBackConsumer;
-import org.benedetto.ifr.feedback.MaxAttractivityFeedbackGenerator;
+import org.benedetto.ifr.feedback.generators.MaxAttractivityFeedbackGenerator;
 import org.benedetto.ifr.topologicalsort.InvalidAhrszStateException;
 import org.benedetto.ifr.topologicalsort.InvalidExpansionStateException;
 

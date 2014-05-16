@@ -2,9 +2,9 @@ package org.benedetto.ifr.adjacencymatrix;
 
 import com.google.gson.Gson;
 import org.benedetto.ifr.adjancencylist.*;
-import org.benedetto.ifr.feedback.AwgFeedBackConsumer;
 import org.benedetto.ifr.feedback.FeedBack;
 import org.benedetto.ifr.feedback.InvalidFeedBackException;
+import org.benedetto.ifr.feedback.consumers.AwgFeedBackConsumer;
 import org.benedetto.ifr.flickr.FlickrCache;
 import org.benedetto.ifr.flickr.InvalidCacheRequestException;
 import org.benedetto.ifr.util.ComparablePair;
