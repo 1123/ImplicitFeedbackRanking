@@ -3,7 +3,7 @@ package org.benedetto.ifr.adjancencylist;
 import org.benedetto.ifr.feedback.FeedBack;
 import org.benedetto.ifr.feedback.InvalidFeedBackException;
 import org.benedetto.ifr.feedback.consumers.AwgFeedBackConsumer;
-import org.benedetto.ifr.feedback.generators.MaxAttractivityFeedbackGenerator;
+import org.benedetto.ifr.feedback.generators.ItemBiasedFeedBackGenerator;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -21,7 +21,7 @@ public class RandomFeedbackTest {
 
     @Test
     public void testTopologicalSort() {
-        MaxAttractivityFeedbackGenerator feedBackGenerator = new MaxAttractivityFeedbackGenerator(10, 50, 100, 1.0f);
+        ItemBiasedFeedBackGenerator feedBackGenerator = new ItemBiasedFeedBackGenerator(10, 50, 100, 1.0f);
         gsonPrint(feedBackGenerator.attractivity);
         AwgFeedBackConsumer<Integer> consumer = new AwgFeedBackConsumer<>();
         while (feedBackGenerator.hasNext()) {

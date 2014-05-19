@@ -1,6 +1,10 @@
 package org.benedetto.ifr.feedback.generators;
 
 import org.benedetto.ifr.feedback.FeedBack;
+import org.benedetto.ifr.feedback.InvalidFeedBackException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class generates feedback based on the following assumptions:
@@ -42,23 +46,26 @@ public class PositionBiasedFeedBackGenerator implements FeedBackGenerator<Intege
 
     @Override
     public boolean hasNext() {
-        return amount > 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return amount > 0;
     }
 
     @Override
     public FeedBack<Integer> next() {
-        int position = this.randomPosition();
-        FeedBack<Integer> result = new FeedBack<>();
-        result.chosen = position;
-        while (result.page.size() < positionAttractivity.length) {
+        int chosen = this.randomPosition();
+        List<Integer> page = new ArrayList<>();
+        while (page.size() < positionAttractivity.length) {
             int item = (int) (Math.random() * items);
-            if (result.page.contains(item)) {
+            if (page.contains(item)) {
                 continue;
             }
-            result.page.add(item);
+            page.add(item);
         }
         amount--;
-        return result;
+        try {
+            return new FeedBack<>(chosen, page);
+        } catch (InvalidFeedBackException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private int randomPosition() {

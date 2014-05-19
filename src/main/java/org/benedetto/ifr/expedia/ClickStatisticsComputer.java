@@ -24,8 +24,8 @@ public class ClickStatisticsComputer {
         int[][] clickStatisticsArray = new int[37][37];
         while (cursor.hasNext()) {
             ExpediaFeedback feedback = gson.fromJson(cursor.next().toString(), ExpediaFeedback.class);
-            int pageLength = feedback.page.size();
-            int selectedPosition = feedback.page.indexOf(feedback.chosen);
+            int pageLength = feedback.getPage().size();
+            int selectedPosition = feedback.getPage().indexOf(feedback.getChosen());
             if (pageLength >= 37) continue;
             if (selectedPosition >= 37) continue;
             clickStatisticsArray[selectedPosition][pageLength]++;

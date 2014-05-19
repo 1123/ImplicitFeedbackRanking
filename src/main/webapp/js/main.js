@@ -1,6 +1,6 @@
 var urlsCached = [];
 var searchResultColumns = 4;
-var searchResults = 20;
+var searchResults = 100;
 
 function submit_click(chosen) {
     var feedBack = {

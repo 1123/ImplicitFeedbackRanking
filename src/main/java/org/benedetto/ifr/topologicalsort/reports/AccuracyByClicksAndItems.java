@@ -4,7 +4,7 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.benedetto.ifr.feedback.consumers.AhrszFeedBackConsumer;
 import org.benedetto.ifr.feedback.consumers.FeedBackConsumer;
-import org.benedetto.ifr.feedback.generators.MaxAttractivityFeedbackGenerator;
+import org.benedetto.ifr.feedback.generators.ItemBiasedFeedBackGenerator;
 import org.benedetto.ifr.topologicalsort.InvalidAhrszStateException;
 import org.benedetto.ifr.topologicalsort.InvalidExpansionStateException;
 import org.benedetto.ifr.topologicalsort.SortDistance;
@@ -47,7 +47,7 @@ public class AccuracyByClicksAndItems {
                 int items = minItems + j * itemsStep;
                 int sum = 0;
                 for (int iteration = 0; iteration < iterations; iteration++) {
-                    MaxAttractivityFeedbackGenerator generator = new MaxAttractivityFeedbackGenerator(pageSize, clicks, items, 1.0f);
+                    ItemBiasedFeedBackGenerator generator = new ItemBiasedFeedBackGenerator(pageSize, clicks, items, 1.0f);
                     FeedBackConsumer<Integer> consumer = new AhrszFeedBackConsumer<>();
                     while (generator.hasNext()) {
                         consumer.addFeedBack(generator.next());

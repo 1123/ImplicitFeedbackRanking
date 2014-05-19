@@ -3,7 +3,7 @@ package org.benedetto.ifr.topologicalsort.reports;
 import com.google.common.base.Functions;
 import com.google.common.collect.Lists;
 import org.apache.hadoop.util.StringUtils;
-import org.benedetto.ifr.feedback.generators.MaxAttractivityFeedbackGenerator;
+import org.benedetto.ifr.feedback.generators.ItemBiasedFeedBackGenerator;
 import org.benedetto.ifr.topologicalsort.InvalidAhrszStateException;
 import org.benedetto.ifr.topologicalsort.InvalidExpansionStateException;
 
@@ -35,8 +35,8 @@ public class TimeByClicks {
         for (int clicks = minClicks; clicks < maxClicks; clicks += clicksStep) {
             long diff = 0;
             for (int iteration = 0; iteration < iterations; iteration++) {
-                MaxAttractivityFeedbackGenerator generator =
-                        new MaxAttractivityFeedbackGenerator(pageSize, clicks, items, randomness);
+                ItemBiasedFeedBackGenerator generator =
+                        new ItemBiasedFeedBackGenerator(pageSize, clicks, items, randomness);
                 long start = System.currentTimeMillis();
                 MeasureUtils.consume(generator);
                 long end = System.currentTimeMillis();

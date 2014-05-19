@@ -10,8 +10,8 @@ import java.util.Map;
 public class Statistics extends HashMap<Integer, Map<Integer, Integer>> {
 
     public  void addToStats(FeedBack feedBack) {
-        int pageLength = feedBack.page.size();
-        int chosenPosition = feedBack.page.indexOf(feedBack.chosen) + 1;
+        int pageLength = feedBack.getPage().size();
+        int chosenPosition = feedBack.getPage().indexOf(feedBack.getChosen()) + 1;
         if (! this.containsKey(pageLength)) {
             this.put(pageLength, new HashMap<Integer,Integer>());
         }

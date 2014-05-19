@@ -1,11 +1,12 @@
 package org.benedetto.ifr.feedback.generators;
 
 import org.benedetto.ifr.feedback.FeedBack;
+import org.benedetto.ifr.feedback.InvalidFeedBackException;
 
 import java.util.*;
 
 
-public class MaxAttractivityFeedbackGenerator implements FeedBackGenerator<Integer> {
+public class ItemBiasedFeedBackGenerator implements FeedBackGenerator<Integer> {
 
     int items;
     int pageSize;
@@ -19,7 +20,7 @@ public class MaxAttractivityFeedbackGenerator implements FeedBackGenerator<Integ
      * randomness is the ratio randomattractivity / attractivity.
      */
 
-    public MaxAttractivityFeedbackGenerator(int pageSize, int clicks, int items, float randomness) {
+    public ItemBiasedFeedBackGenerator(int pageSize, int clicks, int items, float randomness) {
         this.items = items;
         this.pageSize = pageSize;
         this.clicks = clicks;
@@ -64,32 +65,36 @@ public class MaxAttractivityFeedbackGenerator implements FeedBackGenerator<Integ
     public FeedBack<Integer> next() {
         if (current >= clicks) { throw new RuntimeException("No more Feedback to generate."); }
         this.current++;
-        return randomIntFeedback(pageSize, items, attractivity, randomness);
+        try {
+            return randomIntFeedback(pageSize, items, attractivity, randomness);
+        } catch (InvalidFeedBackException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void remove() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     private static FeedBack<Integer> randomIntFeedback(
-            int pageSize, int items, Map<Integer, Float> attractivity, float randomness) {
-        FeedBack<Integer> result = new FeedBack<>();
+            int pageSize, int items, Map<Integer, Float> attractivity, float randomness) throws InvalidFeedBackException {
         if (pageSize > items) throw new RuntimeException("Pagesize must be smaller or equal to the number of items.");
-        result.page = new ArrayList<>();
+        List<Integer> page = new ArrayList<>();
         Random r = new Random();
-        result.chosen = 0;
+        int chosen = 0;
         float maxWeight = 0f;
-        while (result.page.size() < pageSize) {
+        while (page.size() < pageSize) {
             int item = r.nextInt(items);
-            if (result.page.contains(item)) continue;
-            result.page.add(item);
+            if (page.contains(item)) continue;
+            page.add(item);
             float weight = attractivity.get(item) + randomness * r.nextFloat();
             if (weight > maxWeight) {
-                result.chosen = item;
+                chosen = item;
                 maxWeight = weight;
             }
         }
+        FeedBack<Integer> result = new FeedBack<>(chosen, page);
         return result;
     }
 

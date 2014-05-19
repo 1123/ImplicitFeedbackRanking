@@ -4,7 +4,7 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.benedetto.ifr.feedback.consumers.AhrszFeedBackConsumer;
 import org.benedetto.ifr.feedback.consumers.FeedBackConsumer;
-import org.benedetto.ifr.feedback.generators.MaxAttractivityFeedbackGenerator;
+import org.benedetto.ifr.feedback.generators.ItemBiasedFeedBackGenerator;
 import org.benedetto.ifr.topologicalsort.InvalidAhrszStateException;
 import org.benedetto.ifr.topologicalsort.InvalidExpansionStateException;
 
@@ -38,8 +38,8 @@ public class TimeByItemsAndClicks {
                 int items = minItems + i * itemsStep;
                 long durationSum = 0;
                 for (int iteration = 0; iteration < iterations; iteration++) {
-                    MaxAttractivityFeedbackGenerator generator =
-                            new MaxAttractivityFeedbackGenerator(pageSize, clicks, items, randomness);
+                    ItemBiasedFeedBackGenerator generator =
+                            new ItemBiasedFeedBackGenerator(pageSize, clicks, items, randomness);
                     FeedBackConsumer<Integer> feedBackConsumer = new AhrszFeedBackConsumer<>();
                     long start = System.currentTimeMillis();
                     while (generator.hasNext()) feedBackConsumer.addFeedBack(generator.next());

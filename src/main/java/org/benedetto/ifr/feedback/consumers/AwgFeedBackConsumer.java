@@ -22,10 +22,10 @@ public class AwgFeedBackConsumer<N extends Comparable<N>> implements FeedBackCon
         // The weight of the edges is in fact not important, as long as each click
         // sums up to the same weight.
         this.statistics.addToStats(feedBack);
-        float weight = 1.0f / feedBack.page.size();
-        for (N item : feedBack.page) {
-            if (item.equals(feedBack.chosen)) continue;
-            this.acyclicWeightedGraph.addEdge(item, feedBack.chosen, weight);
+        float weight = 1.0f / feedBack.getPage().size();
+        for (N item : feedBack.getPage()) {
+            if (item.equals(feedBack.getPage())) continue;
+            this.acyclicWeightedGraph.addEdge(item, feedBack.getChosen(), weight);
         }
     }
 

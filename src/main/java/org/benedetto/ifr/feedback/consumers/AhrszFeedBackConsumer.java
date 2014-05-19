@@ -30,10 +30,10 @@ public class AhrszFeedBackConsumer<N extends Comparable<N>> implements FeedBackC
     @Override
     public void addFeedBack(FeedBack<N> feedBack) throws InvalidExpansionStateException, InvalidAhrszStateException {
         this.statistics.addToStats(feedBack);
-        float weight = 1.0f / feedBack.page.size();
-        for (N item : feedBack.page) {
-            if (item.equals(feedBack.chosen)) continue;
-            this.ahrsz.addEdge(item, feedBack.chosen, weight);
+        float weight = 1.0f / feedBack.getPage().size();
+        for (N item : feedBack.getPage()) {
+            if (item.equals(feedBack.getChosen())) continue;
+            this.ahrsz.addEdge(item, feedBack.getChosen(), weight);
         }
     }
 
@@ -45,7 +45,6 @@ public class AhrszFeedBackConsumer<N extends Comparable<N>> implements FeedBackC
     @Override
     public void sort(List<N> toBeSorted) {
         Collections.sort(toBeSorted, new IndexComparator<N>(this.ahrsz.node2Index));
-        Lists.reverse(toBeSorted); // sort descending
     }
 
 }

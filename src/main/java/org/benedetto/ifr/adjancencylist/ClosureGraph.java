@@ -1,16 +1,12 @@
 package org.benedetto.ifr.adjancencylist;
 
 import org.benedetto.ifr.util.ComparablePair;
-import org.benedetto.ifr.util.Pair;
 
 import java.util.*;
 
-/**
- * Created with IntelliJ IDEA.
- * User: linse
- * Date: 10/31/13
- * Time: 15:24
- * To change this template use File | Settings | File Templates.
+/*
+ * Computing the closure is very time-and-space consuming. This is magnitudes slower than the AHRSZ algorithm.
+ * Hence this class can be removed.
  */
 
 public class ClosureGraph<N extends Comparable<N>> extends ArrayList<ComparablePair<N, N>> {

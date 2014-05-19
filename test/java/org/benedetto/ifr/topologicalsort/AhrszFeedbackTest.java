@@ -1,14 +1,10 @@
 package org.benedetto.ifr.topologicalsort;
 
-import com.google.common.collect.Lists;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import org.benedetto.ifr.feedback.FeedBack;
 import org.benedetto.ifr.feedback.InvalidFeedBackException;
 import org.benedetto.ifr.feedback.consumers.AhrszFeedBackConsumer;
 import org.junit.Test;
 
-import java.lang.reflect.Type;
 import java.util.*;
 
 import static junit.framework.TestCase.assertTrue;

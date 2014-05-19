@@ -12,12 +12,8 @@ public class FeedBack<N> {
      * Items with higher attractivity have a greater chance of being clicked than items with low attractivity.
      */
 
-    public N chosen;
-    public List<N> page;
-
-    public FeedBack() {
-        this.page = new ArrayList<>();
-    }
+    private N chosen;
+    private List<N> page;
 
     public FeedBack(N chosen, List<N> page) throws InvalidFeedBackException {
         if (! page.contains(chosen)) throw new InvalidFeedBackException();
@@ -25,6 +21,12 @@ public class FeedBack<N> {
         this.page = page;
     }
 
+    public N getChosen() {
+        return chosen;
+    }
 
+    public List<N> getPage() {
+        return page;
+    }
 }
 
