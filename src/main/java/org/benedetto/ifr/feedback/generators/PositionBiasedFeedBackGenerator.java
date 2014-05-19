@@ -62,7 +62,7 @@ public class PositionBiasedFeedBackGenerator implements FeedBackGenerator<Intege
         }
         amount--;
         try {
-            return new FeedBack<>(chosen, page);
+            return new FeedBack<>(page.get(chosen), page);
         } catch (InvalidFeedBackException e) {
             throw new RuntimeException(e);
         }

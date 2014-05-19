@@ -24,7 +24,7 @@ public class AwgFeedBackConsumer<N extends Comparable<N>> implements FeedBackCon
         this.statistics.addToStats(feedBack);
         float weight = 1.0f / feedBack.getPage().size();
         for (N item : feedBack.getPage()) {
-            if (item.equals(feedBack.getPage())) continue;
+            if (item.equals(feedBack.getChosen())) continue;
             this.acyclicWeightedGraph.addEdge(item, feedBack.getChosen(), weight);
         }
     }
