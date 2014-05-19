@@ -9,6 +9,54 @@
     <properties>
         <tomcat.version>7.0.34</tomcat.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>mapr-releases</id>
+            <url>http://repository.mapr.com/maven/</url>
+            <snapshots><enabled>false</enabled></snapshots>
+            <releases><enabled>true</enabled></releases>
+        </repository>
+    </repositories>
+
+    <build>
+        <finalName>embeddedTomcatSample</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <configuration>
+                    <assembleDirectory>target</assembleDirectory>
+                    <programs>
+                        <program>
+                            <mainClass>org.benedetto.ifr.launch.Main</mainClass>
+                            <name>webapp</name>
+                        </program>
+                    </programs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -91,49 +139,4 @@
             <version>1.7</version>
         </dependency>
     </dependencies>
-    <build>
-        <finalName>embeddedTomcatSample</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <inherited>true</inherited>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>appassembler-maven-plugin</artifactId>
-                <version>1.1.1</version>
-                <configuration>
-                    <assembleDirectory>target</assembleDirectory>
-                    <programs>
-                        <program>
-                            <mainClass>org.benedetto.ifr.launch.Main</mainClass>
-                            <name>webapp</name>
-                        </program>
-                    </programs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>assemble</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-    <repositories>
-        <repository>
-            <id>mapr-releases</id>
-            <url>http://repository.mapr.com/maven/</url>
-            <snapshots><enabled>false</enabled></snapshots>
-            <releases><enabled>true</enabled></releases>
-        </repository>
-    </repositories>
 </project>
