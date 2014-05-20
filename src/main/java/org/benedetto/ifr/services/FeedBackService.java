@@ -42,11 +42,8 @@ public class FeedBackService {
             throws SQLException, InvalidExpansionStateException, InvalidAhrszStateException, InvalidFeedBackException {
         checkArgument(! feedBack.equals(""));
         FeedBackConsumer<String> consumer = SessionMaintainer.consumerFromSession(req);
-        // deserialization with Gson and generic types:
-        // see : http://stackoverflow.com/questions/8989899/gson-deserialize-collections
-        FeedBack<String> fb = new FeedBack<>(null, null);
-        Type listType = TypeToken.get(fb.getClass()).getType();
-        fb = new Gson().fromJson(feedBack, listType);
+        Type feedBackStringType = new TypeToken<FeedBack<String>>() {}.getType();
+        FeedBack<String> fb = new Gson().fromJson(feedBack, feedBackStringType);
         consumer.addFeedBack(fb);
         return "OK";
     }
