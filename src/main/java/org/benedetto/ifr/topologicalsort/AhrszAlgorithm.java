@@ -31,13 +31,13 @@ public class AhrszAlgorithm<N extends Comparable<N>> {
             insertTop(from, to);
             return;
         }
-        // only from is new
+        // only <from> is new
         if (! node2Index.containsKey(from)) {
             this.put(from, minIndex);
             this.minIndex--;
             return;
         }
-        // only to is new
+        // only <to> is new
         if (! node2Index.containsKey(to)) {
             this.put(to, maxIndex);
             this.maxIndex++;
@@ -47,8 +47,6 @@ public class AhrszAlgorithm<N extends Comparable<N>> {
         if (node2Index.get(from) < node2Index.get(to)) return;
         // neither of the nodes are new, and the new edge requires a reordering.
         reorder(from,to);
-        // TODO: this is for development purposes only. It should be removed when AHRSZ is stable.
-        // AhrszChecker.checkAhrsz(this);
     }
 
     private void insertTop(N from, N to) {
@@ -69,7 +67,7 @@ public class AhrszAlgorithm<N extends Comparable<N>> {
         while (! es.success) { // repeat until no more cycles found
             // the edge to be inserted may be removed when cycles are detected.
             // Once this newly inserted edge has been removed, there is no need to reorder.
-            if (! this.hashMapGraph.has_edge(from, to)) return;
+            if (! this.hashMapGraph.hasEdge(from, to)) return;
             es = new ExpansionState<>(from, to);
             this.expand(es);
         }
@@ -82,10 +80,8 @@ public class AhrszAlgorithm<N extends Comparable<N>> {
         while (! es.finished()) {
             es.success = expandForward(es);
             if (! es.success) return;
-            // es.check(this.node2Index);
             es.success = expandBackward(es);
             if (! es.success) return;
-            // es.check(this.node2Index);
         }
     }
 

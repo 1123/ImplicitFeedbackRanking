@@ -4,19 +4,6 @@ import org.benedetto.ifr.util.FloatUtils;
 
 import java.util.*;
 
-/**
- * This class maintains an acyclic weighted directed graph upon insertions of edges.
- * Upon insertion of edges, it is checked whether the introduction of the edge would
- * complete a cycle. In this case the cycle is decreased by the minimum edge weight
- * of the edges composing the cycle. This way the edge with the minimal weight is
- * removed. Note that the insertion of an edge may cause multiple cycles to be completed.
- * In this case the first cycle found in removed. A smarter choice could be to
- * split the newly inserted edge into multiple virtual edges, one for each newly introduced
- * cycle.
- *
- * @param <N>: The datatype of the Nodes. Might be Integers, Strings, Urls, etc.
- */
-
 public class HashMapGraph<N extends Comparable<N>> {
 
     public HashMap<N, HashMap<N, Float>> forward;
@@ -25,6 +12,16 @@ public class HashMapGraph<N extends Comparable<N>> {
     public HashMapGraph() {
         this.forward = new HashMap<>();
         this.backward = new HashMap<>();
+    }
+
+    public List<Edge> topNEdges(int n) {
+        EdgeQueue result = new EdgeQueue(n);
+        for (N from : this.forward.keySet()) {
+            for (N to: this.forward.get(from).keySet()) {
+                result.insertWithOverflow(new Edge<>(from, to, this.forward.get(from).get(to)));
+            }
+        }
+        return new ArrayList<>(result.asList());
     }
 
     public Set<N> nodes() {
@@ -78,7 +75,7 @@ public class HashMapGraph<N extends Comparable<N>> {
     }
 
     public List<N> search(N start, N goal) {
-        return this.searchRec(start, goal, new Stack<N>());
+        return this.searchRec(start, goal, new Stack<>());
     }
 
     public List<N> searchRec(N start, N goal, Stack<N> path) {
@@ -137,7 +134,7 @@ public class HashMapGraph<N extends Comparable<N>> {
         }
     }
 
-    public boolean has_edge(N from, N to) {
+    public boolean hasEdge(N from, N to) {
         if (! this.forward.containsKey(from)) return false;
         if (! this.forward.get(from).containsKey(to)) return false;
         return (! FloatUtils.floatEqual(this.forward.get(from).get(to), 0f));

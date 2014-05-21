@@ -17,7 +17,7 @@ public class ClosureGraphTest {
 
     @Test
     public void simpleTest() {
-        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph();
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph<>();
         g.addEdge(1,2,0.2f);
         g.addEdge(2,3,0.3f);
         g.addEdge(2,4,0.3f);
@@ -28,7 +28,7 @@ public class ClosureGraphTest {
 
     @Test
     public void mediumTest() {
-        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph();
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph<>();
         g.addEdge(1,4, 0.1f);
         g.addEdge(2,3, 0.2f);
         g.addEdge(3,4, 0.1f);

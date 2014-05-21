@@ -1,0 +1,24 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <canvas id="my_canvas" width="600" height="400" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+        <script src="springy/springy.js"></script>
+        <script src="springy/springyui.js"></script>
+        <script>
+            // make a new graph
+            var graph = new Springy.Graph();
+
+            // make some nodes
+            var spruce = graph.newNode({label: 'Norway Spruce'});
+            var fir = graph.newNode({label: 'Sicilian Fir'});
+
+            // connect them with an edge
+            graph.newEdge(spruce, fir);
+
+            $('#my_canvas').springy({ graph: graph });
+        </script>
+    </body>
+</html>

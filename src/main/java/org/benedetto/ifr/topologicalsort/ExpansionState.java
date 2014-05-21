@@ -31,6 +31,11 @@ public class ExpansionState <N extends Comparable<N>> {
         return forwardQueue.isEmpty() && backwardQueue.isEmpty();
     }
 
+    /**
+     * This method checks an invariant on the ExpansionState which should always hold true.
+     * This can be used during development or debugging or in tests.
+     **/
+
     public void check(Map<N,Integer> node2index) throws InvalidExpansionStateException {
         for (Path<N> forwardPath : this.forwardQueue) {
             if (! forwardPath.ascending(node2index)) {

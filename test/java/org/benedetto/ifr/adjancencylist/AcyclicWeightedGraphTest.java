@@ -9,19 +9,11 @@ import static junit.framework.Assert.*;
 import static org.benedetto.ifr.util.FloatUtils.floatEqual;
 import static org.benedetto.ifr.TestUtil.gsonPrint;
 
-
-/**
- * Created with IntelliJ IDEA.
- * User: linse
- * Date: 10/31/13
- * Time: 18:38
- * To change this template use File | Settings | File Templates.
- */
 public class AcyclicWeightedGraphTest {
 
     @Test
     public void simpleTest() {
-        AcyclicWeightedGraph g = new AcyclicWeightedGraph();
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph<>();
         g.addEdge(1, 2, 0.2f);
         g.addEdge(2, 3, 0.3f);
         gsonPrint(g);
@@ -29,7 +21,7 @@ public class AcyclicWeightedGraphTest {
 
     @Test
     public void doubleEdgeTest() {
-        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph();
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph<>();
         g.addEdge(1, 2, 0.1f);
         g.addEdge(1, 2, 0.2f);
         gsonPrint(g);
@@ -38,18 +30,18 @@ public class AcyclicWeightedGraphTest {
 
     @Test
     public void simpleCycleTest() {
-        AcyclicWeightedGraph g = new AcyclicWeightedGraph();
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph<>();
         g.addEdge(1, 2, 0.1f);
         g.addEdge(2, 3, 0.2f);
         gsonPrint(g);
         List<Integer> cycle = g.search(1,3);
         gsonPrint(cycle);
-        assertEquals(cycle, Arrays.asList(new Integer[]{1, 2, 3}));
+        assertEquals(cycle, Arrays.asList(1, 2, 3));
     }
 
     @Test
     public void longCycleTest() {
-        AcyclicWeightedGraph g = new AcyclicWeightedGraph();
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph<>();
         g.addEdge(0, 2, 0.3f);
         g.addEdge(1, 2, 0.1f);
         g.addEdge(2, 3, 0.2f);
@@ -57,21 +49,21 @@ public class AcyclicWeightedGraphTest {
         g.addEdge(3, 5, 0.3f);
         List<Integer> cycle = g.search(1,5);
         gsonPrint(cycle);
-        assertEquals(cycle, Arrays.asList(new Integer [] { 1, 2, 3, 5 }));
+        assertEquals(cycle, Arrays.asList(1, 2, 3, 5));
     }
 
 
     @Test
-    public void simpleCylceRemovalTest() {
-        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph();
+    public void simpleCycleRemovalTest() {
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph<>();
         g.addEdge(1, 2, 0.1f);
         g.addEdge(2, 1, 0.2f);
         assertTrue(floatEqual(g.getF(2).get(1), 0.1f));
         assertFalse(g.getF(1).containsKey(2));
     }
 
-    public static AcyclicWeightedGraph longCycleGraph() {
-        AcyclicWeightedGraph g = new AcyclicWeightedGraph();
+    public static AcyclicWeightedGraph<Integer> longCycleGraph() {
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph<>();
         g.addEdge(0, 2, 0.3f);
         g.addEdge(1, 2, 0.1f);
         g.addEdge(2, 3, 0.2f);
@@ -83,7 +75,7 @@ public class AcyclicWeightedGraphTest {
 
     @Test
     public void longCycleRemovalTest() {
-        AcyclicWeightedGraph<Integer> g = this.longCycleGraph();
+        AcyclicWeightedGraph<Integer> g = longCycleGraph();
         assertNull(g.getF(1).get(2));
         assertTrue(floatEqual(g.getF(2).get(3), 0.1f));
         assertTrue(floatEqual(g.getF(0).get(2), 0.3f));
@@ -93,7 +85,7 @@ public class AcyclicWeightedGraphTest {
 
     @Test
     public void doubleCycleRemovalTest() {
-        AcyclicWeightedGraph g = new AcyclicWeightedGraph();
+        AcyclicWeightedGraph<Integer> g = new AcyclicWeightedGraph<>();
         g.addEdge(1,2,0.1f);
         g.addEdge(1,2,0.1f);
         g.addEdge(2,1,0.1f);
