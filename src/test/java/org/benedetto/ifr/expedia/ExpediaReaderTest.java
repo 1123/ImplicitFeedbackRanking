@@ -14,6 +14,6 @@ public class ExpediaReaderTest {
     @Test
     public void testRead() throws Exception {
         ExpediaReader reader = new ExpediaReader();
-        reader.read();
+        reader.read(100);
     }
 }

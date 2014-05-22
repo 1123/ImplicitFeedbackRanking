@@ -22,7 +22,7 @@ public class ExpediaReader {
         this.feedbackCollection = db.getCollection("feedback");
     }
 
-    public void read() throws UnknownHostException, InvalidFeedBackException {
+    public void read(int maxLines) throws UnknownHostException, InvalidFeedBackException {
         Gson gson = new Gson();
         DBCollection coll = db.getCollection("clicks_training");
         DBObject order = new BasicDBObject();
@@ -31,7 +31,7 @@ public class ExpediaReader {
         int count = 0;
         int srch_id = 0;
         List<Click> clickBuffer = new ArrayList<>();
-        while (cursor.hasNext() && count < 10000000) {
+        while (cursor.hasNext() && count < maxLines) {
             Click click = gson.fromJson(cursor.next().toString(), Click.class);
             if (click.getSrch_id() > srch_id) {
                 savePage(click.getSrch_id(), clickBuffer);

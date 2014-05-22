@@ -75,7 +75,7 @@ public class HashMapGraph<N extends Comparable<N>> {
     }
 
     public List<N> search(N start, N goal) {
-        return this.searchRec(start, goal, new Stack<>());
+        return this.searchRec(start, goal, new Stack<N>());
     }
 
     public List<N> searchRec(N start, N goal, Stack<N> path) {
