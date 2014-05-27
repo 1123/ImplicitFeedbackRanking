@@ -6,12 +6,6 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;
 
-/**
- * Created with IntelliJ IDEA.
- * User: linse
- * Date: 10/17/13
- * Time: 23:39
- */
 public class ImageRankingTest {
 
     @Test

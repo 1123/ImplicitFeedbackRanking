@@ -1,0 +1,17 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <canvas id="my_canvas" width="600" height="400" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+        <script src="springy/springy.js"></script>
+        <script src="springy/springyui.js"></script>
+        <script>
+            var graph = new Springy.Graph();
+            graph.addNodes('1', '2', '3', '4', '5');
+            graph.addEdges(['1', '3'], ['2', '5'], ['2', '4'], ['1', '4']);
+            $('#my_canvas').springy({ graph: graph });
+        </script>
+    </body>
+</html>

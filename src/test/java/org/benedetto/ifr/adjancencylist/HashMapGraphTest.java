@@ -21,7 +21,7 @@ public class HashMapGraphTest {
         graph.addEdge(1,3,0.2f);
         graph.addEdge(2,3,0.1f);
         graph.addEdge(4,2,0.3f);
-        List<Edge> result = graph.topNEdges(2);
+        List<Edge<Integer>> result = graph.topNEdges(2);
         Edge<Integer> expected1 = new Edge<>(1,3,0.2f);
         Edge<Integer> expected2 = new Edge<>(4,2,0.3f);
         System.err.println(new Gson().toJson(result));

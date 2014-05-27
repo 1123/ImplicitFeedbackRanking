@@ -16,8 +16,18 @@ package org.benedetto.ifr.adjancencylist;
 public class Edge<N> implements Comparable<Edge<N>> {
 
     Float weight;
-    N from;
-    N to;
+
+    public N getFrom() {
+        return from;
+    }
+
+    private N from;
+
+    public N getTo() {
+        return to;
+    }
+
+    private N to;
 
     public Edge(N from, N to, Float weight) {
         this.from = from;

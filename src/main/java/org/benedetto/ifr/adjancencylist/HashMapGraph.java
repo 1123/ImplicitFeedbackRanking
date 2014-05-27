@@ -14,14 +14,24 @@ public class HashMapGraph<N extends Comparable<N>> {
         this.backward = new HashMap<>();
     }
 
-    public List<Edge> topNEdges(int n) {
-        EdgeQueue result = new EdgeQueue(n);
+    public List<Edge<N>> topNEdges(int n) {
+        EdgeQueue<N> result = new EdgeQueue<>(n);
         for (N from : this.forward.keySet()) {
             for (N to: this.forward.get(from).keySet()) {
                 result.insertWithOverflow(new Edge<>(from, to, this.forward.get(from).get(to)));
             }
         }
         return new ArrayList<>(result.asList());
+    }
+
+    public List<N> topNEdgeNodes(int n) {
+        List<Edge<N>> edges = this.topNEdges(n);
+        Set<N> result = new TreeSet<>();
+        for (Edge<N> e : edges) {
+            result.add(e.getFrom());
+            result.add(e.getTo());
+        }
+        return new ArrayList<>(result);
     }
 
     public Set<N> nodes() {
