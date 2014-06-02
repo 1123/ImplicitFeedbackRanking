@@ -5,11 +5,10 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.benedetto.ifr.adjancencylist.Edge;
 import org.benedetto.ifr.adjancencylist.HashMapGraph;
+import org.benedetto.ifr.services.GraphPropertyService;
 import org.benedetto.ifr.topologicalsort.reports.Context;
-import org.benedetto.ifr.topologicalsort.reports.ReportUtils;
 import org.benedetto.ifr.util.Mapper;
 import org.benedetto.ifr.util.MyFunctional;
-import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -44,20 +43,22 @@ public class SpringyTranslator <N extends Comparable<N>> {
     }
 
     public String translateGraph(HashMapGraph<N> graph) {
+        GraphPropertyService graphFeatureService = new GraphPropertyService();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("var graph = new Springy.Graph();");
         stringBuilder.append(System.getProperty("line.separator"));
-        stringBuilder.append(this.translateNodes(graph.topNEdgeNodes(10)));
+        stringBuilder.append(this.translateNodes(graphFeatureService.topNEdgeNodes(graph, 10)));
         stringBuilder.append(System.getProperty("line.separator"));
-        stringBuilder.append(this.translateEdges(graph.topNEdges(10)));
+        stringBuilder.append(this.translateEdges(graphFeatureService.topNEdges(graph, 10)));
         return stringBuilder.toString();
     }
 
     public String serializeToHtml(HashMapGraph<N> graph, int numberOfEdges) {
+        GraphPropertyService graphFeatureService = new GraphPropertyService();
         VelocityContext context = new VelocityContext();
         StringWriter w = new StringWriter();
-        context.put("nodes", this.translateNodes(graph.topNEdgeNodes(numberOfEdges)));
-        context.put("edges", this.translateEdges(graph.topNEdges(numberOfEdges)));
+        context.put("nodes", this.translateNodes(graphFeatureService.topNEdgeNodes(graph, numberOfEdges)));
+        context.put("edges", this.translateEdges(graphFeatureService.topNEdges(graph, numberOfEdges)));
         Template t = Context.getVelocityEngine().getTemplate("springyTemplate.vm");
         t.merge(context, w);
         return w.toString();

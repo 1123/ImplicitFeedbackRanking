@@ -24,7 +24,7 @@ import static junit.framework.TestCase.assertTrue;
 
 public class RestApiTest {
 
-    private static final int pageSize = 3;
+    private static final int pageSize = 10;
     private static final String host = "localhost";
     private static final int port = 9090;
     private static String tags = "Ferienhaus";
@@ -32,27 +32,27 @@ public class RestApiTest {
 
     private static String searchFlickrUrl() {
         return String.format(
-                "http://%s:%s/api/graph/search_flickr?tags=%s&number=%d",
+                "http://%s:%s/api/searcher/search_flickr?tags=%s&number=%d",
                 host, port, tags, pageSize
         );
     }
 
     private static String postFeedbackUrl() {
-        return String.format("http://%s:%s/api/graph/click", host, port);
+        return String.format("http://%s:%s/api/feedback/click", host, port);
     }
 
     private static String sortedImagesUrl() {
-        return String.format("http://%s:%s/api/graph/sort?tags=%s", host, port, tags);
+        return String.format("http://%s:%s/api/sorter/sort?tags=%s", host, port, tags);
     }
 
     @BeforeClass
     public static void setup() throws ServletException, LifecycleException, InterruptedException {
         tomcatThread = new Thread(new TomcatStarter(port + ""));
         tomcatThread.start();
-        Thread.sleep(20000);
+        Thread.sleep(5000);
     }
 
-    //@Test // this won't work, since httpclient does not use session cookies by default.
+    // @Test // this won't work, since httpclient does not use session cookies by default.
     public void test() throws IOException, InterruptedException, InvalidFeedBackException {
         CookieStore cookieStore = new BasicCookieStore();
         HttpContext httpContext = new BasicHttpContext();

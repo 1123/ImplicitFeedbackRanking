@@ -14,26 +14,6 @@ public class HashMapGraph<N extends Comparable<N>> {
         this.backward = new HashMap<>();
     }
 
-    public List<Edge<N>> topNEdges(int n) {
-        EdgeQueue<N> result = new EdgeQueue<>(n);
-        for (N from : this.forward.keySet()) {
-            for (N to: this.forward.get(from).keySet()) {
-                result.insertWithOverflow(new Edge<>(from, to, this.forward.get(from).get(to)));
-            }
-        }
-        return new ArrayList<>(result.asList());
-    }
-
-    public List<N> topNEdgeNodes(int n) {
-        List<Edge<N>> edges = this.topNEdges(n);
-        Set<N> result = new TreeSet<>();
-        for (Edge<N> e : edges) {
-            result.add(e.getFrom());
-            result.add(e.getTo());
-        }
-        return new ArrayList<>(result);
-    }
-
     public Set<N> nodes() {
         // Using a set as result to eliminate duplicate nodes that are contained both in
         // forward and backward as keys.
@@ -43,9 +23,16 @@ public class HashMapGraph<N extends Comparable<N>> {
         return result;
     }
 
-    /* get forward edge */
+    /**
+     * This method returns all outgoing edges together with its weights for a given node.
+     **/
+
     public HashMap<N, Float> getF(N key) {
         return this.forward.get(key);
+    }
+
+    public HashMap<N, Float> getB(N key) {
+        return this.backward.get(key);
     }
 
     private void addForwardEdge(N from, N to, Float weight) {
@@ -88,7 +75,7 @@ public class HashMapGraph<N extends Comparable<N>> {
         return this.searchRec(start, goal, new Stack<N>());
     }
 
-    public List<N> searchRec(N start, N goal, Stack<N> path) {
+    private List<N> searchRec(N start, N goal, Stack<N> path) {
         if (forward.get(start) == null) return null;
         path.push(start);
         // if the start node does not have any outgoing edges, then the current edge cannot be part of a cycle.
@@ -144,9 +131,17 @@ public class HashMapGraph<N extends Comparable<N>> {
         }
     }
 
+    /**
+     *
+     * returns true if and only if there is an edge from node @from to node @to.
+     *
+     */
+
     public boolean hasEdge(N from, N to) {
         if (! this.forward.containsKey(from)) return false;
         if (! this.forward.get(from).containsKey(to)) return false;
         return (! FloatUtils.floatEqual(this.forward.get(from).get(to), 0f));
     }
+
+
 }

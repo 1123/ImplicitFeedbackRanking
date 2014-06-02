@@ -1,7 +1,6 @@
 package org.benedetto.ifr.services;
 
 import com.google.gson.Gson;
-import org.benedetto.ifr.adjancencylist.ClosureGraph;
 import org.benedetto.ifr.feedback.consumers.FeedBackConsumer;
 import org.benedetto.ifr.flickr.FlickrCache;
 import org.benedetto.ifr.flickr.InvalidCacheRequestException;
@@ -19,11 +18,11 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class SortService {
+public class RestSortService {
 
     FlickrCache cache;
 
-    public SortService(FlickrCache cache) {
+    public RestSortService(FlickrCache cache) {
         this.cache = cache;
     }
 

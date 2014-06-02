@@ -91,8 +91,8 @@ public class AhrszAlgorithm<N extends Comparable<N>> {
         if (es.backwardQueue.isEmpty()) { return true; }
         Path<N> highestPath = es.backwardQueue.remove();
         N highest = highestPath.get(highestPath.size() - 1);
-        if (this.hashMapGraph.backward.get(highest) == null) return true;
-        for (N predecessor : this.hashMapGraph.backward.get(highest).keySet()) {
+        if (this.hashMapGraph.getB(highest) == null) return true;
+        for (N predecessor : this.hashMapGraph.getB(highest).keySet()) {
             if (node2Index.get(predecessor) <= node2Index.get(es.to)) continue;
             if (detectAndRemoveCycle(es.forwardQueue, predecessor, highestPath, direction.backward)) return false;
             Path<N> predecessorPath = new Path<N>(highestPath);
@@ -110,8 +110,8 @@ public class AhrszAlgorithm<N extends Comparable<N>> {
         Path<N> lowestPath = es.forwardQueue.remove();
         N lowest = lowestPath.get(lowestPath.size() - 1);
         // check if there are any outgoing edges from the end of the lowest path.
-        if (this.hashMapGraph.forward.get(lowest) == null) return true;
-        for (N successor : this.hashMapGraph.forward.get(lowest).keySet()) {
+        if (this.hashMapGraph.getF(lowest) == null) return true;
+        for (N successor : this.hashMapGraph.getF(lowest).keySet()) {
             if (detectAndRemoveCycle(es.backwardQueue, successor, lowestPath, direction.forward)) return false;
             // only add nodes to the frontier that have higher priority then the source of the
             // new edge.
@@ -132,7 +132,6 @@ public class AhrszAlgorithm<N extends Comparable<N>> {
         ArrayList<Path<N>> backwardList = new ArrayList<>(queue);
         int index = backwardList.indexOf(new Path<>(successor));
         path.addAll(Lists.reverse(backwardList.get(index)));
-        // TODO: we may need to add the edge from->to to the cycle.
         if (dir == direction.forward) {
             this.hashMapGraph.removeCycle(path);
         } else {

@@ -21,11 +21,11 @@ import static com.google.common.base.Preconditions.checkArgument;
  *
  **/
 
-public class SearchService {
+public class RestSearchService {
 
     FlickrCache cache;
 
-    public SearchService(FlickrCache cache) {
+    public RestSearchService(FlickrCache cache) {
         this.cache = cache;
     }
 

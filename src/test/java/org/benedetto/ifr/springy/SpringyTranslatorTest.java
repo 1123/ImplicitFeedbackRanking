@@ -2,7 +2,6 @@ package org.benedetto.ifr.springy;
 
 import org.benedetto.ifr.adjancencylist.HashMapGraph;
 import org.benedetto.ifr.feedback.consumers.AhrszFeedBackConsumer;
-import org.benedetto.ifr.feedback.consumers.FeedBackConsumer;
 import org.benedetto.ifr.feedback.generators.PositionAndItemBiasedFeedBackGenerator;
 import org.benedetto.ifr.topologicalsort.InvalidAhrszStateException;
 import org.benedetto.ifr.topologicalsort.InvalidExpansionStateException;
@@ -34,11 +33,11 @@ public class SpringyTranslatorTest {
     @Test
     public void test2() throws InvalidExpansionStateException, InvalidAhrszStateException, FileNotFoundException {
         PositionAndItemBiasedFeedBackGenerator generator =
-                new PositionAndItemBiasedFeedBackGenerator(100, 200, new int[][]{ { 4,3,2,1}, {2,1,1,0}, {1,1,0,0}, {1,0,0,0} });
-        AhrszFeedBackConsumer consumer = new AhrszFeedBackConsumer();
+                new PositionAndItemBiasedFeedBackGenerator(20, 100, new int[][]{ { 4,3,2,1}, {2,1,1,0}, {1,1,0,0}, {1,0,0,0} });
+        AhrszFeedBackConsumer<Integer> consumer = new AhrszFeedBackConsumer<>();
         while (generator.hasNext()) {
             consumer.addFeedBack(generator.next());
         }
-        translator.serializeToHtml(consumer.ahrsz.hashMapGraph, 100, "src/main/resources/graph.html");
+        translator.serializeToHtml(consumer.ahrsz.hashMapGraph, 20, "src/main/resources/graph.html");
     }
 }

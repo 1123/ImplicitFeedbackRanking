@@ -26,11 +26,11 @@ import static com.google.common.base.Preconditions.checkArgument;
  *
  **/
 
-public class FeedBackService {
+public class RestFeedBackService {
 
     FlickrCache cache;
 
-    public FeedBackService(FlickrCache cache) {
+    public RestFeedBackService(FlickrCache cache) {
         this.cache = cache;
     }
 
